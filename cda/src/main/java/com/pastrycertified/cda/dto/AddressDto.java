@@ -1,0 +1,64 @@
+package com.pastrycertified.cda.dto;
+
+import com.pastrycertified.cda.models.Address;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+public class AddressDto {
+
+    private Integer id;
+
+    @NotNull(message = "le numéro de rue ne peut pas être null")
+    @NotEmpty(message = "le numéro de rue ne peut pas être null")
+    private Integer address_number;
+
+    @NotNull(message = "le nom de la rue ne peut pas être null")
+    @NotEmpty(message = "le nom de la rue ne peut pas être null")
+    private String street;
+
+    @NotNull(message = "le code postal ne peut pas être null")
+    @NotEmpty(message = "le code postal ne peut pas être null")
+    @Size(min = 5, max = 5, message = "le code postal le respect pas le format")
+    private String zipCode;
+
+    @NotNull(message = "le nom de la ville ne peut pas être null")
+    @NotEmpty(message = "le nom de la ville ne peut pas être null")
+    private String city;
+
+    @NotNull(message = "le nom de du pays ne peut pas être null")
+    @NotEmpty(message = "le nom de du pays ne peut pas être null")
+    private String country;
+
+    public static AddressDto fromEntity(Address address) {
+
+        return AddressDto.builder()
+                .id(address.getId())
+                .address_number(address.getAddress_number())
+                .street(address.getStreet())
+                .zipCode(address.getZipCode())
+                .city(address.getCity())
+                .country(address.getCountry())
+                .build();
+    }
+
+    public static Address toEntity(AddressDto address) {
+
+        return Address.builder()
+                .id(address.getId())
+                .address_number(address.getAddress_number())
+                .street(address.getStreet())
+                .zipCode(address.getZipCode())
+                .city(address.getCity())
+                .country(address.getCountry())
+                .build();
+    }
+}
