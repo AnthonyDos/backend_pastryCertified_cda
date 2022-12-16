@@ -45,6 +45,8 @@ public class UserDto {
     @NotEmpty(message = "Le téléphone ne doit pas être vide")
     private String phone;
 
+
+
 //    private AddressDto address;
 
     public static UserDto fromEntity(User user) {
