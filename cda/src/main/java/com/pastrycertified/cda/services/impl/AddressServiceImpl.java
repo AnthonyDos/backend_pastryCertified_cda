@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,17 +31,21 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDto> findAll() {
-        return null;
+        return addressRepository.findAll()
+                .stream()
+                .map(AddressDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
     public AddressDto findById(Integer id) {
-        return null;
+        return addressRepository.findById(id)
+                .map(AddressDto::fromEntity)
+                .orElseThrow(()-> new EntityNotFoundException("L'adresse n'existe pas"));
     }
 
     @Override
     public AddressDto findAddressByIdUser(Integer id) {
-
         return addressRepository.findAddressByIdUser(id)
                 .map(AddressDto::fromEntity)
                 .orElseThrow(()-> new EntityNotFoundException("L'utilisateur ne posséde pas d'adresse"));
@@ -48,11 +53,34 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Integer updateByid(Integer id, AddressDto dto) {
-        return null;
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("L'utilisateur ne posséde pas d'adresse"));
+        if ( dto.getAddress_number() != null ) {
+            address.setAddress_number(dto.getAddress_number());
+        }
+
+        if ( dto.getStreet() != null ) {
+            address.setStreet(dto.getStreet());
+        }
+
+        if ( dto.getCity() != null ) {
+            address.setCity(dto.getCity());
+        }
+
+        if ( dto.getZipCode() != null ) {
+            address.setZipCode(dto.getZipCode());
+        }
+
+        if ( dto.getCountry() != null ) {
+            address.setCountry(dto.getCountry());
+        }
+
+        addressRepository.save(address);
+        return address.getId();
     }
 
     @Override
     public void delete(Integer id) {
-
+        addressRepository.deleteById(id);
     }
 }

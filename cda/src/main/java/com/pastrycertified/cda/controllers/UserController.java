@@ -36,7 +36,6 @@ public class UserController {
             @PathVariable("user-id") Integer userId,
             @RequestBody UserDto user
     ) {
-        System.out.println(user);
         return ResponseEntity.ok(service.updateByid(userId,user));
     }
 

@@ -62,38 +62,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updateByid(Integer id, UserDto dto) {
-        User user2 = userRepository.findById(id)
+        User ifUser = userRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Aucun utilisateur n'a été trouvé avec l'ID fourni :" + id));
 
         if ( dto.getEmail() != null ) {
-            user2.setEmail(dto.getEmail());
+            ifUser.setEmail(dto.getEmail());
         }
 
         if ( dto.getBirth_day() != null ) {
-            user2.setBirth_day(dto.getBirth_day());
+            ifUser.setBirth_day(dto.getBirth_day());
         }
 
         if ( dto.getCivility() != null ) {
-            user2.setCivility(dto.getCivility());
+            ifUser.setCivility(dto.getCivility());
         }
 
         if ( dto.getFirstname() != null ) {
-            user2.setFirstname(dto.getFirstname());
+            ifUser.setFirstname(dto.getFirstname());
         }
 
         if ( dto.getLastname() != null ) {
-            user2.setLastname(dto.getLastname());
+            ifUser.setLastname(dto.getLastname());
         }
 
         if ( dto.getPassword() != null ) {
-            user2.setPassword(passwordEncoder.encode(dto.getPassword()));
+            ifUser.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
         if ( dto.getPhone() != null ) {
-            user2.setPhone(dto.getPhone());
+            ifUser.setPhone(dto.getPhone());
         }
-        userRepository.save(user2);
-        return user2.getId();
+        userRepository.save(ifUser);
+        return ifUser.getId();
     }
 
     @Override
