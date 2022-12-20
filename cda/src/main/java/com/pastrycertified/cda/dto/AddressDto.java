@@ -1,13 +1,15 @@
 package com.pastrycertified.cda.dto;
 
 import com.pastrycertified.cda.models.Address;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class AddressDto {
     private Integer id;
 
     @NotNull(message = "le numéro de rue ne peut pas être null")
-    @NotEmpty(message = "le numéro de rue ne peut pas être null")
+    //@NotEmpty(message = "le numéro de rue ne peut pas être null")
     private Integer address_number;
 
     @NotNull(message = "le nom de la rue ne peut pas être null")
@@ -38,6 +40,8 @@ public class AddressDto {
     @NotEmpty(message = "le nom de du pays ne peut pas être null")
     private String country;
 
+    private Integer userId;
+
     public static AddressDto fromEntity(Address address) {
 
         return AddressDto.builder()
@@ -47,6 +51,7 @@ public class AddressDto {
                 .zipCode(address.getZipCode())
                 .city(address.getCity())
                 .country(address.getCountry())
+                .userId(address.getUser().getId())
                 .build();
     }
 
@@ -59,6 +64,11 @@ public class AddressDto {
                 .zipCode(address.getZipCode())
                 .city(address.getCity())
                 .country(address.getCountry())
+                .user(
+                        User.builder()
+                                .id(address.getUserId())
+                                .build()
+                )
                 .build();
     }
 }

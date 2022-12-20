@@ -1,11 +1,11 @@
 package com.pastrycertified.cda.models;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Data

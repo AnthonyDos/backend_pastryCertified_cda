@@ -1,29 +1,26 @@
 package com.pastrycertified.cda.services.impl;
 
-//import com.pastrycertified.cda.dto.AuthenticationResponse;
+import com.pastrycertified.cda.config.JwtUtils;
+import com.pastrycertified.cda.dto.AuthenticationRequest;
+import com.pastrycertified.cda.dto.AuthenticationResponse;
 import com.pastrycertified.cda.dto.UserDto;
-        import com.pastrycertified.cda.models.Role;
+import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
-        import com.pastrycertified.cda.repository.RoleRepository;
+import com.pastrycertified.cda.repository.RoleRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.UserService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
-import jakarta.persistence.EntityNotFoundException;
-        import lombok.RequiredArgsConstructor;
-//import org.springframework.security.core.userdetails.UserDetails;
-
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.lang.reflect.Field;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,13 +31,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ObjectsValidator<UserDto> validator;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
+    private final AuthenticationManager authManager;
+
 
     @Override
     public Integer save(UserDto dto) {
         validator.validate(dto);
         User user = UserDto.toEntity(dto);
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(findOrCreateRole(ROLE_USER));
         return userRepository.save(user).getId();
     }
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if ( dto.getPassword() != null ) {
-            user2.setPassword(dto.getPassword());
+            user2.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
         if ( dto.getPhone() != null ) {
@@ -101,19 +101,41 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional
+    public AuthenticationResponse  register(UserDto dto) {
+        validator.validate(dto);
+        User user = UserDto.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(findOrCreateRole(ROLE_USER));
 
+        var savedUser = userRepository.save(user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", savedUser.getId());
+        claims.put("fullName", savedUser.getFirstname() + " " + savedUser.getLastname());
+        String token = jwtUtils.generateToken(savedUser, claims);
+        return AuthenticationResponse.builder()
+                .token(token)
+                .build();
+    }
 
-//    @Override
-//    @Transactional
-//    public AuthenticationResponse register(UserDto dto) {
-//        validator.validate(dto);
-//        User user = UserDto.toEntity(dto);
-//        user.setPassword(user.getPassword());
-//        user.setRole(findOrCreateRole(ROLE_USER));
-//
-//        return AuthenticationResponse.builder()
-//                .;
-//    }
+    @Override
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+        );
+
+        final User user = userRepository.findByEmail(request.getEmail()).get();
+        System.out.println(user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getId());
+        claims.put("fullName", user.getFirstname() + " " + user.getLastname());
+        final String token = jwtUtils.generateToken(user, claims);
+        System.out.println(token);
+        return AuthenticationResponse.builder()
+                .token(token)
+                .build();
+    }
 
     private Role findOrCreateRole(String roleName) {
         Role role = roleRepository.findByName(UserServiceImpl.ROLE_USER)

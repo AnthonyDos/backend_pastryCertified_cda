@@ -1,11 +1,12 @@
 package com.pastrycertified.cda.dto;
 
 import com.pastrycertified.cda.models.User;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
