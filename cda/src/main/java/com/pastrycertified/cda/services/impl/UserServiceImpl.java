@@ -55,7 +55,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Integer id) {
-        return userRepository.findById(id)
+        return null;
+    }
+
+    @Override
+    public UserDto findUserById(Integer id) {
+
+        return userRepository.findUserById(id)
                 .map(UserDto::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun utilisateur n'a été trouvé avec l'ID fourni :" + id));
     }
@@ -136,6 +142,11 @@ public class UserServiceImpl implements UserService {
                 .token(token)
                 .build();
     }
+
+//    @Override
+//    public UserDto findUserById(Integer id) {
+//        return null;
+//    }
 
     private Role findOrCreateRole(String roleName) {
         Role role = roleRepository.findByName(UserServiceImpl.ROLE_USER)

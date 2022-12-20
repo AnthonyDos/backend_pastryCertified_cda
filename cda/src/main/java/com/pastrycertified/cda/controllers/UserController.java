@@ -25,10 +25,10 @@ public class UserController {
     public ResponseEntity<List<UserDto>> findAll() { return ResponseEntity.ok(service.findAll()); }
 
     @GetMapping("/{user-id}")
-    public ResponseEntity<UserDto> findById(
+    public ResponseEntity<UserDto> findUserById(
             @PathVariable("user-id") Integer userId
     ) {
-        return ResponseEntity.ok(service.findById(userId));
+        return ResponseEntity.ok(service.findUserById(userId));
     }
 
     @PatchMapping("/update/{user-id}")

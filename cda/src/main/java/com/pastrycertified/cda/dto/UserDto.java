@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.dto;
 
+import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,9 +47,7 @@ public class UserDto {
     @NotEmpty(message = "Le téléphone ne doit pas être vide")
     private String phone;
 
-
-
-//    private AddressDto address;
+    private String role_name;
 
     public static UserDto fromEntity(User user) {
         return UserDto.builder()
@@ -60,7 +59,7 @@ public class UserDto {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .phone(user.getPhone())
-//                .address(AddressDto.fromEntity(user.getAddress()))
+                .role_name(user.getRole().getName())
                 .build();
     }
 
@@ -74,7 +73,11 @@ public class UserDto {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .phone(user.getPhone())
-//                .address(AddressDto.toEntity(user.getAddress()))
+                .role(
+                        Role.builder()
+                                .name(user.role_name)
+                                .build()
+                )
                 .build();
     }
 }
