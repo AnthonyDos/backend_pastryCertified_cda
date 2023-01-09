@@ -43,7 +43,8 @@ public class SecurityConfig {
                                 //toute url qui contient auth et toutes celles qui contiennet enregistrement
                                 request.antMatchers(
                                                 "/**/authenticate",
-                                                "/**/register","**/addresses"
+                                                "/**/register","**/addresses",
+                                                "/**/register-admin"
                                         )
                                         .permitAll()//authorisé ces url
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
@@ -52,8 +53,21 @@ public class SecurityConfig {
                                         .sessionManagement()
                                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                                         .and()
-                                        .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-                                        .and();
+                                        .exceptionHandling()
+                                        .accessDeniedHandler(accessDeniedHandler());
+//                                request.antMatchers(
+//                                        "/register-admin"
+//                                )
+//                                        .permitAll()
+//                                        .anyRequest()
+//                                        .hasRole("ROLE_ADMIN")
+//                                        .and()
+//                                        .sessionManagement()
+//                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                                        .and()
+//                                        .exceptionHandling()
+//                                        .accessDeniedHandler(accessDeniedHandler());
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

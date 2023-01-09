@@ -1,8 +1,7 @@
 package com.pastrycertified.cda.dto;
 
-import com.pastrycertified.cda.models.Address;
+import com.pastrycertified.cda.models.Admin;
 import com.pastrycertified.cda.models.Role;
-import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,11 +13,9 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class AdminDto {
 
     private Integer id;
-
-    private String civility;
 
     @NotNull(message = "Le nom ne doit pas être null")
     @NotEmpty(message = "le nom ne doit pas être vide")
@@ -27,10 +24,6 @@ public class UserDto {
     @NotNull(message = "Le prénom ne doit pas être null")
     @NotEmpty(message = "le prénom ne doit pas être vide")
     private String firstname;
-
-    @NotNull(message = "La date anniversaire ne doit pas être null")
-    @NotEmpty(message = "La date anniversaire ne doit pas être vide")
-    private String birth_day;
 
     @NotNull(message = "L'email ne doit pas être null")
     @NotEmpty(message = "L'email ne doit pas être vide")
@@ -48,40 +41,36 @@ public class UserDto {
     @NotEmpty(message = "Le téléphone ne doit pas être vide")
     private String phone;
 
+    private String cast_member;
+
     private String role_name;
 
-    private Integer address_id;
+    public static AdminDto fromEntity(Admin admin) {
 
-    //private AddressDto address;
-
-    public static UserDto fromEntity(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .civility(user.getCivility())
-                .lastname(user.getLastname())
-                .firstname(user.getFirstname())
-                .birth_day(user.getBirth_day())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phone(user.getPhone())
-                .role_name(user.getRole().getName())
-                .address_id(user.getAddress().getId())
+        return AdminDto.builder()
+                .id(admin.getId())
+                .lastname(admin.getLastname())
+                .firstname(admin.getFirstname())
+                .email(admin.getEmail())
+                .password(admin.getPassword())
+                .phone(admin.getPhone())
+                .cast_member(admin.getCast_member())
+                .role_name(admin.getRole().getName())
                 .build();
     }
 
-    public static User toEntity(UserDto user) {
-        return User.builder()
-                .id(user.getId())
-                .civility(user.getCivility())
-                .lastname(user.getLastname())
-                .firstname(user.getFirstname())
-                .birth_day(user.getBirth_day())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phone(user.getPhone())
+    public static Admin toEntity(AdminDto admin) {
+        return Admin.builder()
+                .id(admin.getId())
+                .lastname(admin.getLastname())
+                .firstname(admin.getFirstname())
+                .email(admin.getEmail())
+                .password(admin.getPassword())
+                .phone(admin.getPhone())
+                .cast_member(admin.getCast_member())
                 .role(
                         Role.builder()
-                                .name(user.role_name)
+                                .name(admin.role_name)
                                 .build()
                 )
                 .build();

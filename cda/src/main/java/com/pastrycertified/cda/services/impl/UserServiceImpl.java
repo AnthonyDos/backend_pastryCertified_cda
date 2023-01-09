@@ -143,11 +143,6 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-//    @Override
-//    public UserDto findUserById(Integer id) {
-//        return null;
-//    }
-
     private Role findOrCreateRole(String roleName) {
         Role role = roleRepository.findByName(UserServiceImpl.ROLE_USER)
                 .orElse(null);
