@@ -90,19 +90,4 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(representation);
     }
-
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public void handleConflict(HttpServletResponse response) throws IOException {
-//        System.out.println(response + " response test");
-//        response.sendError(403, "Your Message");
-//    }
-//    public ResponseEntity<ExceptionRepresentation> ExceptionJwtExpired(AccessDeniedException e) {
-//        System.out.println(e + " test jwt");
-//        ExceptionRepresentation representation = ExceptionRepresentation.builder()
-//                .errorMessage(e.getMessage())
-//                .build();
-//        return ResponseEntity
-//                .status(HttpStatus.NOT_FOUND)
-//                .body(representation);
-//    }
 }
