@@ -30,7 +30,6 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -44,9 +43,15 @@ public class SecurityConfig {
                                 request.antMatchers(
                                                 "/**/authenticate",
                                                 "/**/register","**/addresses",
-                                                "/**/register-admin"
-                                        )
-                                        .permitAll()//authorisé ces url
+                                                "/**/register-admin",
+                                                "/**/authenticate-admin"
+                                )
+                                        .permitAll()
+                                        .antMatchers("/**/users/**").hasRole("USER")
+                                        .antMatchers(
+                                                "/**/users/",
+                                                "/**/admins/**"
+                                                ).hasRole("ADMIN")//authorisé ces url
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()
                                         .and()
@@ -55,19 +60,6 @@ public class SecurityConfig {
                                         .and()
                                         .exceptionHandling()
                                         .accessDeniedHandler(accessDeniedHandler());
-//                                request.antMatchers(
-//                                        "/register-admin"
-//                                )
-//                                        .permitAll()
-//                                        .anyRequest()
-//                                        .hasRole("ROLE_ADMIN")
-//                                        .and()
-//                                        .sessionManagement()
-//                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                                        .and()
-//                                        .exceptionHandling()
-//                                        .accessDeniedHandler(accessDeniedHandler());
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -78,8 +70,7 @@ public class SecurityConfig {
                 // permet de filtrer de voir si le jwt token est valide, il fera la verification avant
                 // d'executer : UsernamePasswordAuthenticationFilter.class
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors()
-        ;
+                .cors();
         return http.build();
 
     }

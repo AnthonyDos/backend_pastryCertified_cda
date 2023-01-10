@@ -21,15 +21,4 @@ public class AbstractEntity {
     @GeneratedValue
     private Integer id;
 
-//    private String lastname;
-//
-//    private String firstname;
-//
-//    @Column(unique = true)
-//    private String email;
-//
-//    private String password;
-//
-//    private String phone;
-
 }

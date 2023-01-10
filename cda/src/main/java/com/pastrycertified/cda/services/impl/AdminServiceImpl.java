@@ -8,6 +8,7 @@ import com.pastrycertified.cda.models.Admin;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.repository.AdminRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
+import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.AdminService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,6 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = AdminDto.toEntity(dto);
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         admin.setRole(findOrCreateRole(ROLE_ADMIN));
-        admin.setCast_member(ACTIVITY + generateCastNumber(4));
         return adminRepository.save(admin).getId();
     }
 
@@ -103,16 +103,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println(request);
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
         final Admin admin = adminRepository.findByEmail(request.getEmail()).get();
         Map<String, Object> claims = new HashMap<>();
+        System.out.println(claims);
         claims.put("userId", admin.getId());
         claims.put("fullName", admin.getFirstname() + " " + admin.getLastname());
         final String token = jwtUtils.generateToken(admin, claims);
-
         return AuthenticationResponse.builder()
                 .token(token)
                 .build();
@@ -128,11 +129,11 @@ public class AdminServiceImpl implements AdminService {
 
     private static String generateCastNumber(int length) {
 
-        String AplhaNumericStr = NUMBERS;
+        String numericStr = NUMBERS;
         StringBuilder castNumber = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
-           int randomCastNumber = (int)(AplhaNumericStr.length() * Math.random());
-            castNumber.append(AplhaNumericStr.charAt(randomCastNumber));
+           int randomCastNumber = (int)(numericStr.length() * Math.random());
+            castNumber.append(numericStr.charAt(randomCastNumber));
         }
 
         return castNumber.toString();

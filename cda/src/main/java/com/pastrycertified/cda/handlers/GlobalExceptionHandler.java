@@ -1,6 +1,7 @@
 package com.pastrycertified.cda.handlers;
 
 import com.pastrycertified.cda.exception.ObjectValidationException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,17 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(representation);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ExceptionRepresentation> ExceptionJwtExpired(ExpiredJwtException e) {
+        System.out.println(e + " test jwt");
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .errorMessage(String.valueOf(e.getCause()))
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
                 .body(representation);
     }
 }

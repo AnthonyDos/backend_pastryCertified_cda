@@ -38,10 +38,7 @@ public class JwtAuthenticationAdmin extends OncePerRequestFilter {
         String userEmail;
         String jwt;
 
-        final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-
         if (authHeader == null || !authHeader.startsWith(BEARER)) {
-            log.info("un utilisateur"+ " " + authHeader + " a tenté d'accéder à l'url sans autorisation" + " " + request.getRequestURI());
             filterChain.doFilter(request, response);
             return;
         }

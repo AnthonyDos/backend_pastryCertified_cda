@@ -55,6 +55,7 @@ public class UserDto {
     //private AddressDto address;
 
     public static UserDto fromEntity(User user) {
+
         return UserDto.builder()
                 .id(user.getId())
                 .civility(user.getCivility())
@@ -65,11 +66,12 @@ public class UserDto {
                 .password(user.getPassword())
                 .phone(user.getPhone())
                 .role_name(user.getRole().getName())
-                .address_id(user.getAddress().getId())
+                //.address_id(user.getAddress().getId())
                 .build();
     }
 
     public static User toEntity(UserDto user) {
+
         return User.builder()
                 .id(user.getId())
                 .civility(user.getCivility())

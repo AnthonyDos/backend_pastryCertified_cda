@@ -4,6 +4,7 @@ import com.pastrycertified.cda.dto.AdminDto;
 import com.pastrycertified.cda.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class AdminController {
 
     private final AdminService service;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/")
     public ResponseEntity<Integer> save(
             @RequestBody AdminDto adminDto
@@ -22,6 +24,15 @@ public class AdminController {
         return ResponseEntity.ok(service.save(adminDto));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<AdminDto>> findAll() { return ResponseEntity.ok(service.findAll()); }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/{admin-id}")
+    public ResponseEntity<AdminDto>findById(
+            @PathVariable("admin-id") Integer adminId
+    ) {
+        return ResponseEntity.ok(service.findAdminById(adminId));
+    }
 }
