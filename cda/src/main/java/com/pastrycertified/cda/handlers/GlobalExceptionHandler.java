@@ -6,12 +6,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.UnexpectedTypeException;
+import java.io.IOException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -88,14 +91,18 @@ public class GlobalExceptionHandler {
                 .body(representation);
     }
 
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ExceptionRepresentation> ExceptionJwtExpired(ExpiredJwtException e) {
-        System.out.println(e + " test jwt");
-        ExceptionRepresentation representation = ExceptionRepresentation.builder()
-                .errorMessage(String.valueOf(e.getCause()))
-                .build();
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(representation);
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public void handleConflict(HttpServletResponse response) throws IOException {
+//        System.out.println(response + " response test");
+//        response.sendError(403, "Your Message");
+//    }
+//    public ResponseEntity<ExceptionRepresentation> ExceptionJwtExpired(AccessDeniedException e) {
+//        System.out.println(e + " test jwt");
+//        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+//                .errorMessage(e.getMessage())
+//                .build();
+//        return ResponseEntity
+//                .status(HttpStatus.NOT_FOUND)
+//                .body(representation);
+//    }
 }
