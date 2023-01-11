@@ -6,15 +6,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.UnexpectedTypeException;
-import java.io.IOException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -88,6 +86,16 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(representation);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ExceptionRepresentation> handleExpiredJwtException(ExpiredJwtException e, WebRequest request) {
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .errorMessage(e.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
                 .body(representation);
     }
 }

@@ -1,7 +1,5 @@
 package com.pastrycertified.cda.services;
 
-import com.pastrycertified.cda.dto.AddressDto;
-
 import java.util.List;
 
 public interface AbstractService<T>{

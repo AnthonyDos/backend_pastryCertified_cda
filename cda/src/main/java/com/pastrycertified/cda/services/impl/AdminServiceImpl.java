@@ -8,7 +8,6 @@ import com.pastrycertified.cda.models.Admin;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.repository.AdminRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
-import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.AdminService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +60,25 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Integer updateByid(Integer id, AdminDto dto) {
-        return null;
+        Admin ifAdmin = adminRepository.findAdminById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Aucun admin correspond à l'id: " + id));
+        if ( dto.getLastname() != null ) {
+            ifAdmin.setLastname(dto.getLastname());
+        }
+        if ( dto.getFirstname() != null ) {
+            ifAdmin.setFirstname(dto.getFirstname());
+        }
+        if ( dto.getEmail() != null ) {
+            ifAdmin.setEmail(dto.getEmail());
+        }
+        if ( dto.getPassword() != null ) {
+            ifAdmin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+        if ( dto.getPhone() != null ) {
+            ifAdmin.setPhone(dto.getPhone());
+        }
+        adminRepository.save(ifAdmin);
+        return ifAdmin.getId();
     }
 
     @Override
@@ -127,6 +144,9 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new EntityNotFoundException("Aucun admin n'a été trouvé avec l'ID fourni :" + id));
     }
 
+    /**
+     * Methode de générateur d'identifiant admin
+     */
     private static String generateCastNumber(int length) {
 
         String numericStr = NUMBERS;

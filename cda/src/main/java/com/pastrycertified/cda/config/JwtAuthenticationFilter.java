@@ -7,11 +7,13 @@ import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.persistence.EntityNotFoundException;
@@ -52,54 +54,49 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7);
+        userEmail = jwtUtils.extractUsername(jwt);
 
         try {
-            userEmail = jwtUtils.extractUsername(jwt);
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
+                if (!userRepository.findByEmail(userEmail).isEmpty()) {
+                    UserDetails userDetails = userRepository.findByEmail(userEmail)
+                            .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable lors de la validation JWT"));
+                    if (jwtUtils.isTokenValid(jwt, userDetails)) {
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                                = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        System.out.println(userDetails.getAuthorities() + " authoritie");
+                        usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    }
+                }
 
-        //userEmail = jwtUtils.extractUsername(jwt);
-        System.out.println(jwt);
-       // System.out.println(userEmail);
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (!adminRepository.findByEmail(userEmail).isEmpty()) {
 
-            if (!userRepository.findByEmail(userEmail).isEmpty()) {
-                UserDetails userDetails = userRepository.findByEmail(userEmail)
-                        .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable lors de la validation JWT"));
-                System.out.println(userDetails);
-                if (jwtUtils.isTokenValid(jwt, userDetails)) {
-                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                            = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    System.out.println(userDetails.getAuthorities() + " authoritie");
-                    System.out.println(userDetails + " details");
-                    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    UserDetails userDetail = adminRepository.findByEmail(userEmail)
+                            .orElseThrow(() -> new EntityNotFoundException("admin token corrompu"));
+
+                    if (jwtUtils.isTokenValid(jwt, userDetail)) {
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                                = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
+                        System.out.println(userDetail.getAuthorities() + " authoritie admin");
+                        usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    }
                 }
             }
 
-            if (!adminRepository.findByEmail(userEmail).isEmpty()) {
-                UserDetails userDetail = adminRepository.findByEmail(userEmail)
-                        .orElseThrow(() -> new EntityNotFoundException("admin introuvable lors de la validation JWT"));
-
-                if (jwtUtils.isTokenValid(jwt, userDetail)) {
-                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                            = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
-                    System.out.println(userDetail.getAuthorities() + " authoritie admin");
-                    System.out.println(userDetail + " detail admin");
-                    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                }
-            }
-        }
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
+            response.getWriter().write("token expired");
+            response.setStatus(401);
             log.error(e.getMessage());
-            System.out.println(e.getMessage());
-            System.out.println(" Token expired ");
+            log.error("Token expired ");
         }
 
 
 
-//        filterChain.doFilter(request, response);
+        //filterChain.doFilter(request, response);
     }
 
 

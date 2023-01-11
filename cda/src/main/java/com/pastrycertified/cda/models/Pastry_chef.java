@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Data
@@ -28,4 +29,7 @@ public class Pastry_chef extends AbstractEntity{
     private String phone;
 
     private BigDecimal cast_member;
+
+    @OneToOne
+    private Role role;
 }

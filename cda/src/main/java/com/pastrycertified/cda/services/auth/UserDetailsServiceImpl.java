@@ -1,8 +1,5 @@
 package com.pastrycertified.cda.services.auth;
 
-import com.pastrycertified.cda.dto.AdminDto;
-import com.pastrycertified.cda.models.Admin;
-import com.pastrycertified.cda.models.User;
 import com.pastrycertified.cda.repository.AdminRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

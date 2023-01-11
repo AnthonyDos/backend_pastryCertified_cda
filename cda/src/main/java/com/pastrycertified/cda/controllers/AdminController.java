@@ -35,4 +35,22 @@ public class AdminController {
     ) {
         return ResponseEntity.ok(service.findAdminById(adminId));
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PatchMapping("/update/{admin-id}")
+    public ResponseEntity<Integer> update(
+            @PathVariable("admin-id") Integer adminId,
+            @RequestBody AdminDto adminDto
+    ) {
+        return ResponseEntity.ok(service.updateByid(adminId, adminDto));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete/{admin-id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable("admin-id") Integer adminId
+    ) {
+        service.delete(adminId);
+        return ResponseEntity.accepted().build();
+    }
 }
