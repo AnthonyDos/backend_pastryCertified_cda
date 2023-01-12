@@ -1,6 +1,6 @@
 package com.pastrycertified.cda.dto;
 
-import com.pastrycertified.cda.models.Admin;
+import com.pastrycertified.cda.models.Salary;
 import com.pastrycertified.cda.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @Builder
-public class AdminDto {
+public class SalaryDto {
 
     private Integer id;
 
@@ -45,33 +45,33 @@ public class AdminDto {
 
     private String role_name;
 
-    public static AdminDto fromEntity(Admin admin) {
+    public static SalaryDto fromEntity(Salary salary) {
 
-        return AdminDto.builder()
-                .id(admin.getId())
-                .lastname(admin.getLastname())
-                .firstname(admin.getFirstname())
-                .email(admin.getEmail())
-                .password(admin.getPassword())
-                .phone(admin.getPhone())
-                .cast_member(admin.getCast_member())
-                .role_name(admin.getRole().getName())
+        return SalaryDto.builder()
+                .id(salary.getId())
+                .lastname(salary.getLastname())
+                .firstname(salary.getFirstname())
+                .email(salary.getEmail())
+                .password(salary.getPassword())
+                .phone(salary.getPhone())
+                .cast_member(salary.getCast_member())
+                .role_name(salary.getRole().getName())
                 .build();
     }
 
-    public static Admin toEntity(AdminDto admin) {
+    public static Salary toEntity(SalaryDto salary) {
 
-        return Admin.builder()
-                .id(admin.getId())
-                .lastname(admin.getLastname())
-                .firstname(admin.getFirstname())
-                .email(admin.getEmail())
-                .password(admin.getPassword())
-                .phone(admin.getPhone())
-                .cast_member(admin.getCast_member())
+        return Salary.builder()
+                .id(salary.getId())
+                .lastname(salary.getLastname())
+                .firstname(salary.getFirstname())
+                .email(salary.getEmail())
+                .password(salary.getPassword())
+                .phone(salary.getPhone())
+                .cast_member(salary.getCast_member())
                 .role(
                         Role.builder()
-                                .name(admin.role_name)
+                                .name(salary.role_name)
                                 .build()
                 )
                 .build();

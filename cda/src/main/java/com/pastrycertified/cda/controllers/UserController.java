@@ -35,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok(service.findUserById(userId));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PatchMapping("/update/{user-id}")
     public ResponseEntity<Integer> updateAccount(
             @PathVariable("user-id") Integer userId,
@@ -44,8 +44,8 @@ public class UserController {
         return ResponseEntity.ok(service.updateByid(userId,user));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @DeleteMapping("/{user-id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete/{user-id}")
     public ResponseEntity<Void> delete(
             @PathVariable("user-id") Integer userId
     ) {

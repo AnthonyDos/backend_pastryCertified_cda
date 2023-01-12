@@ -57,9 +57,9 @@ public class SecurityConfig {
                                                 "/**/users/",
                                                 "/**/users/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
-                                                "/**/admins/**"
+                                                "/**/register-pastrychef"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
-                                        .antMatchers("/**/salary/**").hasRole("PASTRY_CHEF")
+                                        .antMatchers("/**/salary/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()
                                         .and()

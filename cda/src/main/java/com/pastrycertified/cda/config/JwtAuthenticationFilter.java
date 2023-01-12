@@ -1,19 +1,17 @@
 package com.pastrycertified.cda.config;
 
-import com.pastrycertified.cda.repository.AdminRepository;
+import com.pastrycertified.cda.repository.SalaryRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.persistence.EntityNotFoundException;
@@ -30,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
-    private final AdminRepository adminRepository;
+    private final SalaryRepository salaryRepository;
 
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
@@ -70,10 +68,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     }
                 }
 
-                if (!adminRepository.findByEmail(userEmail).isEmpty()) {
+                if (!salaryRepository.findByEmail(userEmail).isEmpty()) {
 
-                    UserDetails userDetail = adminRepository.findByEmail(userEmail)
-                            .orElseThrow(() -> new EntityNotFoundException("admin token corrompu"));
+                    UserDetails userDetail = salaryRepository.findByEmail(userEmail)
+                            .orElseThrow(() -> new EntityNotFoundException("salarié token corrompu"));
 
                     if (jwtUtils.isTokenValid(jwt, userDetail)) {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken

@@ -1,21 +1,20 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.config.JwtUtils;
-import com.pastrycertified.cda.dto.AdminDto;
+import com.pastrycertified.cda.dto.SalaryDto;
 import com.pastrycertified.cda.dto.AuthenticationRequest;
 import com.pastrycertified.cda.dto.AuthenticationResponse;
-import com.pastrycertified.cda.models.Admin;
+import com.pastrycertified.cda.models.Salary;
 import com.pastrycertified.cda.models.Role;
-import com.pastrycertified.cda.repository.AdminRepository;
+import com.pastrycertified.cda.repository.SalaryRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
-import com.pastrycertified.cda.services.AdminService;
+import com.pastrycertified.cda.services.SalaryService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -24,73 +23,87 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
+public class SalaryServiceImpl implements SalaryService {
 
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
-    private final AdminRepository adminRepository;
+    private static final String ROLE_PASTRYCHEF = "ROLE_PASTRYCHEF";
+
+    private static final String ACTIVITY = "admin";
+    private static final String ACTIVITY_PASTRYCHEF = "chef";
+
+    private static final String NUMBERS = "0123456789";
+
+    private final SalaryRepository salaryRepository;
     private final RoleRepository roleRepository;
-    private final ObjectsValidator<AdminDto> validator;
+    private final ObjectsValidator<SalaryDto> validator;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authManager;
 
-    private static final String ACTIVITY = "admin";
-    private static final String NUMBERS = "0123456789";
 
     @Override
-    public Integer save(AdminDto dto) {
+    public Integer save(SalaryDto dto) {
         validator.validate(dto);
-        Admin admin = AdminDto.toEntity(dto);
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRole(findOrCreateRole(ROLE_ADMIN));
-        return adminRepository.save(admin).getId();
+        Salary salary = SalaryDto.toEntity(dto);
+        salary.setPassword(passwordEncoder.encode(salary.getPassword()));
+        salary.setRole(findOrCreateRole(ROLE_ADMIN));
+        return salaryRepository.save(salary).getId();
     }
 
     @Override
-    public List<AdminDto> findAll() {
-        return adminRepository.findAll()
+    public Integer savePastryChef(SalaryDto dto) {
+        validator.validate(dto);
+        Salary salary = SalaryDto.toEntity(dto);
+        salary.setPassword(passwordEncoder.encode(salary.getPassword()));
+        salary.setRole(findOrCreateRole(ROLE_PASTRYCHEF));
+        return salaryRepository.save(salary).getId();
+    }
+
+    @Override
+    public List<SalaryDto> findAll() {
+        return salaryRepository.findAll()
                 .stream()
-                .map(AdminDto::fromEntity)
+                .map(SalaryDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public AdminDto findById(Integer id) {
+    public SalaryDto findById(Integer id) {
         return null;
     }
 
     @Override
-    public Integer updateByid(Integer id, AdminDto dto) {
-        Admin ifAdmin = adminRepository.findAdminById(id)
+    public Integer updateByid(Integer id, SalaryDto dto) {
+        Salary ifSalary = salaryRepository.findAdminById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Aucun admin correspond à l'id: " + id));
         if ( dto.getLastname() != null ) {
-            ifAdmin.setLastname(dto.getLastname());
+            ifSalary.setLastname(dto.getLastname());
         }
         if ( dto.getFirstname() != null ) {
-            ifAdmin.setFirstname(dto.getFirstname());
+            ifSalary.setFirstname(dto.getFirstname());
         }
         if ( dto.getEmail() != null ) {
-            ifAdmin.setEmail(dto.getEmail());
+            ifSalary.setEmail(dto.getEmail());
         }
         if ( dto.getPassword() != null ) {
-            ifAdmin.setPassword(passwordEncoder.encode(dto.getPassword()));
+            ifSalary.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
         if ( dto.getPhone() != null ) {
-            ifAdmin.setPhone(dto.getPhone());
+            ifSalary.setPhone(dto.getPhone());
         }
-        adminRepository.save(ifAdmin);
-        return ifAdmin.getId();
+        salaryRepository.save(ifSalary);
+        return ifSalary.getId();
     }
 
     @Override
     public void delete(Integer id) {
-        adminRepository.findAdminById(id)
+        salaryRepository.findAdminById(id)
                 .orElseThrow(()-> new EntityNotFoundException("La suppression à échoué aucun admin avec l'id: " + id));
-        adminRepository.deleteById(id);
+        salaryRepository.deleteById(id);
     }
 
     private Role findOrCreateRole(String roleName) {
-        Role role = roleRepository.findByName(AdminServiceImpl.ROLE_ADMIN)
+        Role role = roleRepository.findByName(roleName)
                 .orElse(null);
         if (role == null) {
             return roleRepository.save(
@@ -104,14 +117,33 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public AuthenticationResponse register(AdminDto dto) {
+    public AuthenticationResponse register(SalaryDto dto) {
         validator.validate(dto);
-        Admin admin = AdminDto.toEntity(dto);
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRole(findOrCreateRole(ROLE_ADMIN));
-        admin.setCast_member(ACTIVITY + generateCastNumber(4));
+        Salary salary = SalaryDto.toEntity(dto);
+        salary.setPassword(passwordEncoder.encode(salary.getPassword()));
+        salary.setRole(findOrCreateRole(ROLE_ADMIN));
+        salary.setCast_member(ACTIVITY + generateCastNumber(4));
 
-        var savedAdmin = adminRepository.save(admin);
+        var savedAdmin = salaryRepository.save(salary);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", savedAdmin.getId());
+        claims.put("fullName", savedAdmin.getFirstname() + " " + savedAdmin.getLastname());
+        String token = jwtUtils.generateToken(savedAdmin, claims);
+        return AuthenticationResponse.builder()
+                .token(token)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public AuthenticationResponse registerPastryChef(SalaryDto dto) {
+        validator.validate(dto);
+        Salary salary = SalaryDto.toEntity(dto);
+        salary.setPassword(passwordEncoder.encode(salary.getPassword()));
+        salary.setRole(findOrCreateRole(ROLE_PASTRYCHEF));
+        salary.setCast_member(ACTIVITY_PASTRYCHEF + generateCastNumber(4));
+
+        var savedAdmin = salaryRepository.save(salary);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", savedAdmin.getId());
         claims.put("fullName", savedAdmin.getFirstname() + " " + savedAdmin.getLastname());
@@ -128,22 +160,22 @@ public class AdminServiceImpl implements AdminService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        final Admin admin = adminRepository.findByEmail(request.getEmail()).get();
+        final Salary salary = salaryRepository.findByEmail(request.getEmail()).get();
         Map<String, Object> claims = new HashMap<>();
         System.out.println(claims);
-        claims.put("userId", admin.getId());
-        claims.put("fullName", admin.getFirstname() + " " + admin.getLastname());
-        final String token = jwtUtils.generateToken(admin, claims);
+        claims.put("userId", salary.getId());
+        claims.put("fullName", salary.getFirstname() + " " + salary.getLastname());
+        final String token = jwtUtils.generateToken(salary, claims);
         return AuthenticationResponse.builder()
                 .token(token)
                 .build();
     }
 
     @Override
-    public AdminDto findAdminById(Integer id) {
+    public SalaryDto findAdminById(Integer id) {
 
-        return adminRepository.findAdminById(id)
-                .map(AdminDto::fromEntity)
+        return salaryRepository.findAdminById(id)
+                .map(SalaryDto::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun admin n'a été trouvé avec l'ID fourni :" + id));
     }
 
