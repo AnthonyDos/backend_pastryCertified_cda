@@ -54,12 +54,11 @@ public class SecurityConfig {
                                 )
                                         .permitAll()
                                         .antMatchers(
-                                                "/**/users/{id}",
-                                                "/update/{id}").hasRole("USER")
+                                                "/**/users/",
+                                                "/**/users/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
-                                                "/**/users/**",
                                                 "/**/admins/**"
-                                                ).hasRole("ADMIN")//authorisé ces url
+                                                ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
                                         .antMatchers("/**/salary/**").hasRole("PASTRY_CHEF")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()
@@ -79,7 +78,7 @@ public class SecurityConfig {
                 // permet de filtrer de voir si le jwt token est valide, il fera la verification avant
                 // d'executer : UsernamePasswordAuthenticationFilter.class
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilter(jwtAuthFilter)
+                //.addFilter(jwtAuthFilter)
                 .cors();
         return http.build();
 

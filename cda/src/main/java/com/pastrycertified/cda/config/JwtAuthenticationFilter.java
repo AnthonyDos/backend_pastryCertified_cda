@@ -42,21 +42,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        String authHeader = request.getHeader(AUTHORIZATION);
-        String userEmail;
-        String jwt;
-
-        final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-
-        if (authHeader == null || !authHeader.startsWith(BEARER)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        jwt = authHeader.substring(7);
-        userEmail = jwtUtils.extractUsername(jwt);
-
+            final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
         try {
+            String authHeader = request.getHeader(AUTHORIZATION);
+            String userEmail;
+            String jwt;
+
+            if (authHeader == null || !authHeader.startsWith(BEARER)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            jwt = authHeader.substring(7);
+            userEmail = jwtUtils.extractUsername(jwt);
+
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
                 if (!userRepository.findByEmail(userEmail).isEmpty()) {
@@ -78,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     if (jwtUtils.isTokenValid(jwt, userDetail)) {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                                = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
+                                = new UsernamePasswordAuthenticationToken(userDetail, "le token est expiré", userDetail.getAuthorities());
                         System.out.println(userDetail.getAuthorities() + " authoritie admin");
                         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
@@ -88,11 +87,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
-            response.getWriter().write("token expired");
+            response.getWriter().write("token expired pour l'utilisateur ");
+            response.getWriter().write(
+                    e.getClaims().getSubject());
             response.setStatus(401);
             log.error(e.getMessage());
-            log.error("Token expired ");
         }
+
 
 
 
