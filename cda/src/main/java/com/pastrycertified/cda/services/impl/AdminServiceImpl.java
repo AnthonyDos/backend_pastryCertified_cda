@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -83,7 +84,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void delete(Integer id) {
-
+        adminRepository.findAdminById(id)
+                .orElseThrow(()-> new EntityNotFoundException("La suppression à échoué aucun admin avec l'id: " + id));
+        adminRepository.deleteById(id);
     }
 
     private Role findOrCreateRole(String roleName) {

@@ -12,4 +12,5 @@ public interface AdminService extends AbstractService<AdminDto>{
     AuthenticationResponse authenticate(AuthenticationRequest request);
 
     AdminDto findAdminById(Integer id);
+
 }
