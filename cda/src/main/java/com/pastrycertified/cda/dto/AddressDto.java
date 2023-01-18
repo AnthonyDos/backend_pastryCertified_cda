@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,10 +41,10 @@ public class AddressDto {
     @NotEmpty(message = "le nom de du pays ne peut pas être null")
     private String country;
 
-    private Integer userId;
+    private Integer id_user;
 
     public static AddressDto fromEntity(Address address) {
-
+        System.out.println(address.getId());
         return AddressDto.builder()
                 .id(address.getId())
                 .address_number(address.getAddress_number())
@@ -51,7 +52,7 @@ public class AddressDto {
                 .zipCode(address.getZipCode())
                 .city(address.getCity())
                 .country(address.getCountry())
-                .userId(address.getUser().getId())
+                .id_user(address.getUser().getId())
                 .build();
     }
 
@@ -66,7 +67,8 @@ public class AddressDto {
                 .country(address.getCountry())
                 .user(
                         User.builder()
-                                .id(address.getUserId())
+                                .id(address.getId_user())
+                                .idAddress(address.getId())
                                 .build()
                 )
                 .build();

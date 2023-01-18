@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Data
@@ -15,20 +15,11 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Address extends AbstractEntity{
+public class Image extends AbstractEntity{
 
-    private Integer address_number;
-
-    private String street;
-
-    private String zipCode;
-
-    private String city;
-
-    private String country;
+    private byte[] image;
 
     @OneToOne
-    @JoinColumn(name = "id_user")
-    private User user;
-
+    //@JoinColumn(name = "id", referencedColumnName = "id")
+    private Shop shop;
 }

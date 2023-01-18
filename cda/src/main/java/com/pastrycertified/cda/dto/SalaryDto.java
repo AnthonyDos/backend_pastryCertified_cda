@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.dto;
 
+import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.Salary;
 import com.pastrycertified.cda.models.Role;
 import lombok.AllArgsConstructor;

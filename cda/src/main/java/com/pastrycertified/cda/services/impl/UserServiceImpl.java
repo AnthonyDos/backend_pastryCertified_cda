@@ -1,11 +1,15 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.config.JwtUtils;
+import com.pastrycertified.cda.controllers.AddressController;
+import com.pastrycertified.cda.dto.AddressDto;
 import com.pastrycertified.cda.dto.AuthenticationRequest;
 import com.pastrycertified.cda.dto.AuthenticationResponse;
 import com.pastrycertified.cda.dto.UserDto;
+import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
+import com.pastrycertified.cda.repository.AddressRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.UserService;
@@ -35,6 +39,10 @@ public class UserServiceImpl implements UserService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authManager;
 
+    private final AddressRepository addressRepository;
+    private final AddressServiceImpl addressServiceImpl;
+    private final AddressController addressController;
+
 
     @Override
     public Integer save(UserDto dto) {
@@ -60,7 +68,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findUserById(Integer id) {
-
         return userRepository.findUserById(id)
                 .map(UserDto::fromEntity)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun utilisateur n'a été trouvé avec l'ID fourni :" + id));
@@ -112,9 +119,12 @@ public class UserServiceImpl implements UserService {
     public AuthenticationResponse  register(UserDto dto) {
         validator.validate(dto);
         User user = UserDto.toEntity(dto);
+        //addressController.save(AddressDto adressDto);
+        //Address address2 =
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(findOrCreateRole(ROLE_USER));
 
+      //  user.setAddress(addressServiceImpl.save());
         var savedUser = userRepository.save(user);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", savedUser.getId());
@@ -124,6 +134,7 @@ public class UserServiceImpl implements UserService {
                 .token(token)
                 .build();
     }
+
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

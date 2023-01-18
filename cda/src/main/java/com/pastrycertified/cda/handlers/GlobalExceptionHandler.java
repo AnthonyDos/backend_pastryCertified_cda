@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NonUniqueResultException;
 import javax.validation.UnexpectedTypeException;
 
 @RestControllerAdvice
@@ -96,6 +97,16 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
+                .body(representation);
+    }
+
+    @ExceptionHandler(NonUniqueResultException.class)
+    public ResponseEntity<ExceptionRepresentation> handleNonUniqueResultException(NonUniqueResultException e) {
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .errorMessage(e.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(representation);
     }
 }

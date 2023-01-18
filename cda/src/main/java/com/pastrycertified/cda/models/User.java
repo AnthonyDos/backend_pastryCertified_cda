@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -18,11 +20,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-public class User implements UserDetails{
-
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class User extends AbstractEntity implements UserDetails{
 
     private String civility;
 
@@ -38,6 +36,8 @@ public class User implements UserDetails{
     private String phone;
 
     private String birth_day;
+
+    private Integer idAddress;
 
     @OneToOne
     private Address address;

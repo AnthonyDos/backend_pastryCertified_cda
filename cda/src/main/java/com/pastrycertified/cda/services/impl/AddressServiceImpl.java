@@ -2,7 +2,9 @@ package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.dto.AddressDto;
 import com.pastrycertified.cda.models.Address;
+import com.pastrycertified.cda.models.User;
 import com.pastrycertified.cda.repository.AddressRepository;
+import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.AddressService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +20,30 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final ObjectsValidator<AddressDto> validator;
-
+    private final UserRepository userRepository;
 
     @Override
     public Integer save(AddressDto dto) {
-        System.out.println(dto);
-
         validator.validate(dto);
         Address address = AddressDto.toEntity(dto);
         return addressRepository.save(address).getId();
     }
+
+    private User addAddressUser(Integer id) {
+        System.out.println(id + " adress test");
+        User user = userRepository.findUserById(id)
+                .orElse(null);
+
+        if (user.getIdAddress() == null ) {
+            return userRepository.save(
+                    User.builder()
+                            .idAddress(id)
+                            .build()
+            );
+        }
+        return user;
+    }
+
 
     @Override
     public List<AddressDto> findAll() {

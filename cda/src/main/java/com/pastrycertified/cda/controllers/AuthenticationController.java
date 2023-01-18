@@ -1,9 +1,6 @@
 package com.pastrycertified.cda.controllers;
 
-import com.pastrycertified.cda.dto.SalaryDto;
-import com.pastrycertified.cda.dto.AuthenticationRequest;
-import com.pastrycertified.cda.dto.AuthenticationResponse;
-import com.pastrycertified.cda.dto.UserDto;
+import com.pastrycertified.cda.dto.*;
 import com.pastrycertified.cda.services.SalaryService;
 import com.pastrycertified.cda.services.UserService;
 import lombok.RequiredArgsConstructor;

@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Collection;
@@ -20,8 +21,24 @@ import java.util.Collections;
 @Entity
 public class Salary extends AbstractEntity implements UserDetails {
 
+    private String lastname;
+
+    private String firstname;
+
+    @Column(unique = true)
+    private String email;
+
+    private String password;
+
+    private String phone;
+
+    private String cast_member;
+
     @OneToOne
     private Role role;
+
+    @OneToOne
+    private Address address;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
