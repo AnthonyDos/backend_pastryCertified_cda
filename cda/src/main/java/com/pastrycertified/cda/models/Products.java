@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Products extends AbstractEntity{
+public class Products extends AbstractEntity {
 
     @Column(unique = true)
     private String name;

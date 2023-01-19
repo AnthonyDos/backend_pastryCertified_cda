@@ -1,11 +1,11 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Address extends AbstractEntity{
+public class Address extends AbstractEntity {
 
     private Integer address_number;
 

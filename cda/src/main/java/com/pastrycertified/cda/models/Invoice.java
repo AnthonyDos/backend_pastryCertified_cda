@@ -1,6 +1,7 @@
 package com.pastrycertified.cda.models;
 
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Invoice extends AbstractEntity{
+public class Invoice extends AbstractEntity {
 
     private BigDecimal invoice_number;
 

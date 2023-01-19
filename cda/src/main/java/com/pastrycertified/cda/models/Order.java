@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Order extends AbstractEntity{
+public class Order extends AbstractEntity {
 
     private String order_number;
 

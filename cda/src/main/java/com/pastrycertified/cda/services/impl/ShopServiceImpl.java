@@ -7,7 +7,10 @@ import com.pastrycertified.cda.services.ShopService;
 import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -18,10 +21,25 @@ public class ShopServiceImpl implements ShopService {
     private final ObjectsValidator<ShopDto> validator;
 
     @Override
+    public Shop save(String name, String description, MultipartFile image) {
+       Shop shop = shopRepository.findByName(name)
+               .orElse(null);
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        if (shop == null) {
+            return shopRepository.save(
+                    Shop.builder()
+                            .name(name)
+                            .description(description)
+                            .image(Base64.getEncoder().encodeToString(fileName.getBytes()))
+                            .build()
+            );
+        }
+        return shop;
+    }
+
+    @Override
     public Integer save(ShopDto dto) {
-        validator.validate(dto);
-        Shop shop = ShopDto.toEntity(dto);
-        return shopRepository.save(shop).getId();
+        return null;
     }
 
     @Override

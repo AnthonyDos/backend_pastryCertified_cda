@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntityUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -20,20 +19,9 @@ import java.util.Collections;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity implements UserDetails{
+public class User extends AbstractEntityUser implements UserDetails{
 
     private String civility;
-
-    private String lastname;
-
-    private String firstname;
-
-    @Column(unique = true)
-    private String email;
-
-    private String password;
-
-    private String phone;
 
     private String birth_day;
 

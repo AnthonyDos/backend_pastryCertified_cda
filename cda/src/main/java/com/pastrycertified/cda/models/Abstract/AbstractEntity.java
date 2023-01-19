@@ -1,4 +1,4 @@
-package com.pastrycertified.cda.models;
+package com.pastrycertified.cda.models.Abstract;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

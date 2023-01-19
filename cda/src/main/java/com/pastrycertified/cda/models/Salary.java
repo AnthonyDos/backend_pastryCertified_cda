@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntityUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Collection;
@@ -19,18 +19,8 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Salary extends AbstractEntity implements UserDetails {
+public class Salary extends AbstractEntityUser implements UserDetails {
 
-    private String lastname;
-
-    private String firstname;
-
-    @Column(unique = true)
-    private String email;
-
-    private String password;
-
-    private String phone;
 
     private String cast_member;
 

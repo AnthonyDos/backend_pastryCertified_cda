@@ -5,7 +5,6 @@ import com.pastrycertified.cda.dto.ProductsDto;
 import com.pastrycertified.cda.models.Products;
 import com.pastrycertified.cda.services.ProductsService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

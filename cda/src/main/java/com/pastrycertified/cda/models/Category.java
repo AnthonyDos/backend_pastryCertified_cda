@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Category extends AbstractEntity{
+public class Category extends AbstractEntity {
 
     private String name_category;
 }

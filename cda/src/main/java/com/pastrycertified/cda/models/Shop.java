@@ -1,15 +1,13 @@
 package com.pastrycertified.cda.models;
 
+import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import java.io.IOException;
+import javax.persistence.*;
+import javax.validation.constraints.Null;
 
 @Data
 @SuperBuilder
@@ -18,14 +16,13 @@ import java.io.IOException;
 @Entity
 public class Shop extends AbstractEntity {
 
-    private String name_shop;
+    private String name;
 
     private String description;
 
-    private byte[] image;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    @Null
+    private String image;
 
-
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    private Image image;
 }

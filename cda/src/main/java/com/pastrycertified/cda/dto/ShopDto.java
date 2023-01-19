@@ -20,13 +20,13 @@ public class ShopDto {
 
     @NotNull(message = "Le nom ne doit pas être null")
     @NotEmpty(message = "le nom ne doit pas être vide")
-    private String name_shop;
+    private String name;
 
     @NotNull(message = "La description ne doit pas être null")
     @NotEmpty(message = "La description ne doit pas être vide")
     private String description;
 
-    private byte[] image;
+    private String image;
 
 
 
@@ -34,9 +34,8 @@ public class ShopDto {
 
         return ShopDto.builder()
                 .id(shop.getId())
-                .name_shop(shop.getName_shop())
+                .name(shop.getName())
                 .description(shop.getDescription())
-                //.image(shop.getImage().getImage())
                 .image(shop.getImage())
                 .build();
     }
@@ -45,14 +44,9 @@ public class ShopDto {
 
         return Shop.builder()
                 .id(shop.getId())
-                .name_shop(shop.getName_shop())
+                .name(shop.getName())
                 .description(shop.getDescription())
                 .image(shop.getImage())
-//                .image(
-//                        Image.builder()
-//                                .image(shop.getImage())
-//                                .build()
-//                )
                 .build();
     }
 }
