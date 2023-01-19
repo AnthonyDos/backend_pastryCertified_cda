@@ -53,6 +53,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete/{product-id}")
     public ResponseEntity<Void>delete(
             @PathVariable("product-id") Integer productId
     ) {
