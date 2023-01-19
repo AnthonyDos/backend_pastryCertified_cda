@@ -64,12 +64,25 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public Integer updateByid(Integer id, ProductsDto dto) {
-        return null;
+        Products products = productsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun produit ne correspond à l' id" + id));
+
+        if (dto.getName() != null) {
+            products.setName(dto.getName());
+        }
+        if (dto.getIngredients() != null) {
+            products.setIngredients(dto.getIngredients());
+        }
+        if (dto.getPrice() != null) {
+            products.setPrice(dto.getPrice());
+        }
+        productsRepository.save(products);
+        return products.getId();
     }
 
     @Override
     public void delete(Integer id) {
-
+        productsRepository.deleteById(id);
     }
 
 }

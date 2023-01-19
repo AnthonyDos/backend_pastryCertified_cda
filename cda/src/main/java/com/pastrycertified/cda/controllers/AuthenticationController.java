@@ -44,6 +44,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticateAdmin(
             @RequestBody AuthenticationRequest request
     ) {
+        System.out.println(request + " resquest");
         return ResponseEntity.ok(salaryService.authenticate(request));
     }
 

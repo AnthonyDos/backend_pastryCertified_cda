@@ -39,10 +39,6 @@ public class UserServiceImpl implements UserService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authManager;
 
-    private final AddressRepository addressRepository;
-    private final AddressServiceImpl addressServiceImpl;
-    private final AddressController addressController;
-
 
     @Override
     public Integer save(UserDto dto) {
@@ -119,19 +115,19 @@ public class UserServiceImpl implements UserService {
     public AuthenticationResponse  register(UserDto dto) {
         validator.validate(dto);
         User user = UserDto.toEntity(dto);
-        //addressController.save(AddressDto adressDto);
-        //Address address2 =
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(findOrCreateRole(ROLE_USER));
 
-      //  user.setAddress(addressServiceImpl.save());
         var savedUser = userRepository.save(user);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", savedUser.getId());
         claims.put("fullName", savedUser.getFirstname() + " " + savedUser.getLastname());
         String token = jwtUtils.generateToken(savedUser, claims);
+        final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
+
         return AuthenticationResponse.builder()
-                .token(token)
+                .access_token(token)
+                .expiration(expirationToken)
                 .build();
     }
 
@@ -143,14 +139,15 @@ public class UserServiceImpl implements UserService {
         );
 
         final User user = userRepository.findByEmail(request.getEmail()).get();
-        System.out.println(user);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
         claims.put("fullName", user.getFirstname() + " " + user.getLastname());
         final String token = jwtUtils.generateToken(user, claims);
-        System.out.println(token);
+        final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
+
         return AuthenticationResponse.builder()
-                .token(token)
+                .access_token(token)
+                .expiration(expirationToken)
                 .build();
     }
 

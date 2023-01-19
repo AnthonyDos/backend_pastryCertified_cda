@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.validation.constraints.Null;
 
 @Data
 @SuperBuilder
@@ -26,6 +27,7 @@ public class Products extends AbstractEntity{
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
+    @Null
     private String image;
 
     public Products(String name, String ingredients, String price, MultipartFile image) {

@@ -129,8 +129,10 @@ public class SalaryServiceImpl implements SalaryService {
         claims.put("userId", savedAdmin.getId());
         claims.put("fullName", savedAdmin.getFirstname() + " " + savedAdmin.getLastname());
         String token = jwtUtils.generateToken(savedAdmin, claims);
+        final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
         return AuthenticationResponse.builder()
-                .token(token)
+                .access_token(token)
+                .expiration(expirationToken)
                 .build();
     }
 
@@ -148,8 +150,10 @@ public class SalaryServiceImpl implements SalaryService {
         claims.put("userId", savedAdmin.getId());
         claims.put("fullName", savedAdmin.getFirstname() + " " + savedAdmin.getLastname());
         String token = jwtUtils.generateToken(savedAdmin, claims);
+        final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
         return AuthenticationResponse.builder()
-                .token(token)
+                .access_token(token)
+                .expiration(expirationToken)
                 .build();
     }
 
@@ -162,12 +166,14 @@ public class SalaryServiceImpl implements SalaryService {
 
         final Salary salary = salaryRepository.findByEmail(request.getEmail()).get();
         Map<String, Object> claims = new HashMap<>();
-        System.out.println(claims);
         claims.put("userId", salary.getId());
         claims.put("fullName", salary.getFirstname() + " " + salary.getLastname());
         final String token = jwtUtils.generateToken(salary, claims);
+        final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
+
         return AuthenticationResponse.builder()
-                .token(token)
+                .access_token(token)
+                .expiration(expirationToken)
                 .build();
     }
 
