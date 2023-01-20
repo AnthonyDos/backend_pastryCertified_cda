@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Getter
 @Setter
@@ -36,7 +38,7 @@ public class ShopDto {
                 .id(shop.getId())
                 .name(shop.getName())
                 .description(shop.getDescription())
-                .image(shop.getImage())
+                .image(Base64.getEncoder().encodeToString(shop.getImage().getBytes(StandardCharsets.UTF_8)))
                 .build();
     }
 

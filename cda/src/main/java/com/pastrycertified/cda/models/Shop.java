@@ -22,7 +22,6 @@ public class Shop extends AbstractEntity {
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    @Null
     private String image;
 
 }

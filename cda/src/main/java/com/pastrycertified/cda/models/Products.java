@@ -28,7 +28,6 @@ public class Products extends AbstractEntity {
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    @Null
     private String image;
 
     public Products(String name, String ingredients, String price, MultipartFile image) {
@@ -62,7 +61,4 @@ public class Products extends AbstractEntity {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

@@ -29,6 +29,4 @@ public class AbstractEntityUser {
 
     private String phone;
 
-
-
 }
