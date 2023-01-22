@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.Set;
 
 @Data
 @SuperBuilder
@@ -30,35 +29,46 @@ public class Products extends AbstractEntity {
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
-    public Products(String name, String ingredients, String price, MultipartFile image) {
-    }
+    @OneToOne
+    private Category category;
 
-    public String getName() {
-        return name;
-    }
+//    @ManyToMany
+//    @JoinTable(
+//            name = "optioncream_product",
+//            joinColumns = @JoinColumn(name = "id_product"),
+//            inverseJoinColumns = @JoinColumn(name = "id_optioncream")
+//    )
+//    Set<OptionsCream> otpionsCreamProduct;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
+//    public Products(String name, String ingredients, String price, MultipartFile image) {
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getIngredients() {
+//        return ingredients;
+//    }
+//
+//    public void setIngredients(String ingredients) {
+//        this.ingredients = ingredients;
+//    }
+//
+//    public String getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(String price) {
+//        this.price = price;
+//    }
+//
+//    public String getImage() {
+//        return image;
+//    }
 
 }

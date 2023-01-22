@@ -50,7 +50,8 @@ public class SecurityConfig {
                                                 "/**/authenticate",
                                                 "/**/register","**/addresses",
                                                 "/**/register-admin",
-                                                "/**/authenticate-admin"
+                                                "/**/authenticate-admin",
+                                                "/**/categories/all-categories"
                                 )
                                         .permitAll()
                                         .antMatchers(
@@ -58,7 +59,8 @@ public class SecurityConfig {
                                                 "/**/users/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
                                                 "/**/register-pastrychef",
-                                                "/**/shop/**"
+                                                "/**/shop/**",
+                                                "/**/categories/**"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
                                         .antMatchers("/**/salary/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés

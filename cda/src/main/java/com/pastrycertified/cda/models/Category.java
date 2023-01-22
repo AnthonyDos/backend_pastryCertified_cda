@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Data
@@ -16,5 +17,9 @@ import javax.persistence.Entity;
 @Entity
 public class Category extends AbstractEntity {
 
-    private String name_category;
+    private String name;
+
+//    @ManyToMany
+//    Set<OptionsCream> CategoryOptionCream;
+
 }

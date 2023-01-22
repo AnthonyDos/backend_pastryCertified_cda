@@ -40,6 +40,7 @@ public class ShopController {
         return ResponseEntity.ok(shopService.findById(shopId));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PatchMapping("/update-shop/{shop-id}")
     public ResponseEntity<Integer>updateShop(
             @PathVariable("shop-id") Integer shopId,
@@ -48,6 +49,7 @@ public class ShopController {
         return ResponseEntity.ok(shopService.updateByid(shopId, shop));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete-shop/{shop-id}")
     public ResponseEntity<Void> delete(
             @PathVariable("shop-id") Integer shopId

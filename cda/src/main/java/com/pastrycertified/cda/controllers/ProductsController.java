@@ -25,9 +25,10 @@ public class ProductsController {
             @RequestPart("name") String name,
             @RequestPart("ingredients") String ingredients,
             @RequestPart("price") String price,
-            @RequestPart("file") MultipartFile image
+            @RequestPart("file") MultipartFile image,
+            @RequestPart("category") String categoryName
         ) {
-        return service.save(name, ingredients, price, image);
+        return service.save(name, ingredients, price, image, categoryName);
     }
 
     @GetMapping("/{product-id}")

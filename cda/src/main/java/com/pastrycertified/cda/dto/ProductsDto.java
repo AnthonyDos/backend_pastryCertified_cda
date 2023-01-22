@@ -1,14 +1,14 @@
 package com.pastrycertified.cda.dto;
 
+import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.models.Products;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 
 @Getter
 @Setter
@@ -32,13 +32,17 @@ public class ProductsDto {
 
     private String image;
 
+    private String categoryName;
+
     public static ProductsDto fromEntity(Products products) {
 
         return ProductsDto.builder()
                 .id(products.getId())
+                .name(products.getName())
                 .ingredients(products.getIngredients())
                 .price(products.getPrice())
                 .image(products.getImage())
+                .categoryName(products.getCategory().getName())
                 .build();
     }
 
@@ -46,11 +50,15 @@ public class ProductsDto {
 
         return Products.builder()
                 .id(products.getId())
+                .name(products.getName())
                 .ingredients(products.getIngredients())
                 .price(products.getPrice())
                 .image(products.getImage())
+                .category(
+                        Category.builder()
+                                .name(products.getName())
+                                .build()
+                )
                 .build();
     }
-
-
 }

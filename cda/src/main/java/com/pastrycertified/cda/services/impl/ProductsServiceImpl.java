@@ -1,17 +1,18 @@
 package com.pastrycertified.cda.services.impl;
 
+import com.pastrycertified.cda.dto.CategoryDto;
 import com.pastrycertified.cda.dto.ProductsDto;
+import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.models.Products;
+import com.pastrycertified.cda.repository.CategoryRepository;
 import com.pastrycertified.cda.repository.ProductsRepository;
 import com.pastrycertified.cda.services.ProductsService;
-import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,9 +22,10 @@ import java.util.stream.Collectors;
 public class ProductsServiceImpl implements ProductsService {
 
     private final ProductsRepository productsRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
-    public Products save(String name, String ingredients, String price, MultipartFile image) {
+    public Products save(String name, String ingredients, String price, MultipartFile image, String categoryName) {
 
         Products products = productsRepository.findByName(name)
                 .orElse(null);
@@ -36,6 +38,7 @@ public class ProductsServiceImpl implements ProductsService {
                             .ingredients(ingredients)
                             .price(price)
                             .image(Base64.getEncoder().encodeToString(fileName.getBytes()))
+                            .category(findOrCreateCategory(categoryName))
                             .build()
             );
         }
@@ -66,7 +69,7 @@ public class ProductsServiceImpl implements ProductsService {
     public Integer updateByid(Integer id, ProductsDto dto) {
         Products products = productsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun produit ne correspond à l' id" + id));
-
+        System.out.println(dto.getCategoryName() + " dto");
         if (dto.getName() != null) {
             products.setName(dto.getName());
         }
@@ -76,6 +79,9 @@ public class ProductsServiceImpl implements ProductsService {
         if (dto.getPrice() != null) {
             products.setPrice(dto.getPrice());
         }
+        if (dto.getCategoryName() != null) {
+            products.setCategory(findOrCreateCategory(dto.getCategoryName()));
+        }
         productsRepository.save(products);
         return products.getId();
     }
@@ -83,6 +89,22 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public void delete(Integer id) {
         productsRepository.deleteById(id);
+    }
+
+    private Category findOrCreateCategory(String categoryName) {
+
+        Category category = categoryRepository.findByName(categoryName)
+                .orElse(null);
+
+
+        if (category == null) {
+            return categoryRepository.save(
+                    Category.builder()
+                            .name(categoryName)
+                            .build()
+            );
+        }
+        return category;
     }
 
 }

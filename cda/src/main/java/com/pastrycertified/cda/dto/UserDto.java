@@ -51,10 +51,8 @@ public class UserDto {
 
     private Integer address;
 
-    //private Integer testAddress;
-
     public static UserDto fromEntity(User user) {
-        System.out.println(user.getId() + " id s");
+
         return UserDto.builder()
                 .id(user.getId())
                 .civility(user.getCivility())
@@ -65,12 +63,11 @@ public class UserDto {
                 .password(user.getPassword())
                 .phone(user.getPhone())
                 .role_name(user.getRole().getName())
-                //.address(user.getAddress().getId())
                 .build();
     }
 
     public static User toEntity(UserDto user) {
-        System.out.println(user.getId() + " id");
+
         return User.builder()
                 .id(user.getId())
                 .civility(user.getCivility())
@@ -85,8 +82,6 @@ public class UserDto {
                                 .name(user.role_name)
                                 .build()
                 )
-                //.address(AddressDto.toEntity(user.getAddress()))
-//
                 .build();
     }
 }
