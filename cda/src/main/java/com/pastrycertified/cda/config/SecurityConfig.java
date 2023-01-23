@@ -60,7 +60,8 @@ public class SecurityConfig {
                                         .antMatchers(
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",
-                                                "/**/categories/**"
+                                                "/**/categories/**",
+                                                "/**/options/**"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
                                         .antMatchers("/**/salary/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés

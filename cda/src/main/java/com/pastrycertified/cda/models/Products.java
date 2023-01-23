@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -32,6 +35,9 @@ public class Products extends AbstractEntity {
     @OneToOne
     private Category category;
 
+    @OneToOne
+    private Options options;
+
 //    @ManyToMany
 //    @JoinTable(
 //            name = "optioncream_product",
@@ -40,35 +46,6 @@ public class Products extends AbstractEntity {
 //    )
 //    Set<OptionsCream> otpionsCreamProduct;
 
-//    public Products(String name, String ingredients, String price, MultipartFile image) {
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getIngredients() {
-//        return ingredients;
-//    }
-//
-//    public void setIngredients(String ingredients) {
-//        this.ingredients = ingredients;
-//    }
-//
-//    public String getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(String price) {
-//        this.price = price;
-//    }
-//
-//    public String getImage() {
-//        return image;
-//    }
+
 
 }

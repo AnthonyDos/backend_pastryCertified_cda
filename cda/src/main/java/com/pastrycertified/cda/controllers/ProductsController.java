@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -20,7 +21,7 @@ public class ProductsController {
     private final ProductsService service;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/")
+    @PostMapping(value = "/")
     public Products saveProduct(
             @RequestPart("name") String name,
             @RequestPart("ingredients") String ingredients,

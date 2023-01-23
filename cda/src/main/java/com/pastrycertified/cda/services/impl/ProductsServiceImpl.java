@@ -1,10 +1,12 @@
 package com.pastrycertified.cda.services.impl;
 
-import com.pastrycertified.cda.dto.CategoryDto;
+import com.pastrycertified.cda.dto.OptionsDto;
 import com.pastrycertified.cda.dto.ProductsDto;
 import com.pastrycertified.cda.models.Category;
+import com.pastrycertified.cda.models.Options;
 import com.pastrycertified.cda.models.Products;
 import com.pastrycertified.cda.repository.CategoryRepository;
+import com.pastrycertified.cda.repository.OptionsRepository;
 import com.pastrycertified.cda.repository.ProductsRepository;
 import com.pastrycertified.cda.services.ProductsService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +29,6 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public Products save(String name, String ingredients, String price, MultipartFile image, String categoryName) {
-
         Products products = productsRepository.findByName(name)
                 .orElse(null);
 
@@ -95,7 +97,6 @@ public class ProductsServiceImpl implements ProductsService {
 
         Category category = categoryRepository.findByName(categoryName)
                 .orElse(null);
-
 
         if (category == null) {
             return categoryRepository.save(

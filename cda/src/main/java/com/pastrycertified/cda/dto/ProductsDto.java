@@ -1,19 +1,30 @@
 package com.pastrycertified.cda.dto;
 
 import com.pastrycertified.cda.models.Category;
+import com.pastrycertified.cda.models.Options;
 import com.pastrycertified.cda.models.Products;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
+@TypeDefs({
+        @TypeDef(name = "json", typeClass = JsonStringType.class)
+})
 public class ProductsDto {
 
     private Integer id;
@@ -34,6 +45,12 @@ public class ProductsDto {
 
     private String categoryName;
 
+    private String optionsName;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private Map<String, String> listOption;
+
     public static ProductsDto fromEntity(Products products) {
 
         return ProductsDto.builder()
@@ -43,6 +60,7 @@ public class ProductsDto {
                 .price(products.getPrice())
                 .image(products.getImage())
                 .categoryName(products.getCategory().getName())
+                .optionsName(products.getOptions().getTypeOption())
                 .build();
     }
 
@@ -57,6 +75,12 @@ public class ProductsDto {
                 .category(
                         Category.builder()
                                 .name(products.getName())
+                                .build()
+                )
+                .options(
+                        Options.builder()
+                                .typeOption(products.getOptionsName())
+                                .listOption(products.getListOption())
                                 .build()
                 )
                 .build();
