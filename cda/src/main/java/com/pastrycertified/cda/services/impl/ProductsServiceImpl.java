@@ -1,6 +1,5 @@
 package com.pastrycertified.cda.services.impl;
 
-import com.pastrycertified.cda.dto.OptionsDto;
 import com.pastrycertified.cda.dto.ProductsDto;
 import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.models.Options;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,9 +24,10 @@ public class ProductsServiceImpl implements ProductsService {
 
     private final ProductsRepository productsRepository;
     private final CategoryRepository categoryRepository;
+    private final OptionsRepository optionsRepository;
 
     @Override
-    public Products save(String name, String ingredients, String price, MultipartFile image, String categoryName) {
+    public Products save(String name, String ingredients, String price, MultipartFile image, String categoryName, String typeOption, String cream, String finition, String paste) {
         Products products = productsRepository.findByName(name)
                 .orElse(null);
 
@@ -41,6 +40,7 @@ public class ProductsServiceImpl implements ProductsService {
                             .price(price)
                             .image(Base64.getEncoder().encodeToString(fileName.getBytes()))
                             .category(findOrCreateCategory(categoryName))
+                            .options(findByTypeOption(typeOption,cream,finition,paste))
                             .build()
             );
         }
@@ -71,7 +71,7 @@ public class ProductsServiceImpl implements ProductsService {
     public Integer updateByid(Integer id, ProductsDto dto) {
         Products products = productsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Aucun produit ne correspond à l' id" + id));
-        System.out.println(dto.getCategoryName() + " dto");
+
         if (dto.getName() != null) {
             products.setName(dto.getName());
         }
@@ -83,6 +83,9 @@ public class ProductsServiceImpl implements ProductsService {
         }
         if (dto.getCategoryName() != null) {
             products.setCategory(findOrCreateCategory(dto.getCategoryName()));
+        }
+        if (dto.getOptionsName() != null || dto.getCream() != null || dto.getFinition() != null || dto.getPaste() != null) {
+            products.setOptions(findByTypeOption(dto.getOptionsName(), dto.getCream(), dto.getFinition(), dto.getPaste()));
         }
         productsRepository.save(products);
         return products.getId();
@@ -97,7 +100,6 @@ public class ProductsServiceImpl implements ProductsService {
 
         Category category = categoryRepository.findByName(categoryName)
                 .orElse(null);
-
         if (category == null) {
             return categoryRepository.save(
                     Category.builder()
@@ -108,4 +110,21 @@ public class ProductsServiceImpl implements ProductsService {
         return category;
     }
 
+    private Options findByTypeOption (String typeOption, String cream, String finition, String paste) {
+
+        Options options = optionsRepository.findByTypeOption(typeOption)
+                .orElse(null);
+
+        if (options == null){
+            return optionsRepository.save(
+                        Options.builder()
+                                .typeOption(typeOption)
+                                .cream(cream)
+                                .finition(finition)
+                                .paste(paste)
+                                .build()
+            );
+        }
+        return options;
+    }
 }

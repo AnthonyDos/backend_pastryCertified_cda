@@ -27,19 +27,29 @@ public class OptionsDto {
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
-    private Map<String, String> listOption;
+    private String cream;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String finition;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String paste;
+//    @Type( type = "json" )
+//    @Column(columnDefinition = "json")
+//    private Map<String, String> listOption;
 
     private String nameCategory;
-
-    //private CategoryDto category;
 
     public static OptionsDto fromEntity(Options options) {
 
         return OptionsDto.builder()
                 .id(options.getId())
                 .typeOption(options.getTypeOption())
-                .listOption(options.getListOption())
-                //.nameCategory(options.getCategory().getName())
+                .cream(options.getCream())
+                .finition(options.getFinition())
+                .paste(options.getPaste())
                 .build();
     }
 
@@ -48,12 +58,9 @@ public class OptionsDto {
         return Options.builder()
                 .id(options.getId())
                 .typeOption(options.getTypeOption())
-                .listOption(options.getListOption())
-//                .category(
-//                        Category.builder()
-//                                .name(options.getNameCategory())
-//                                .build()
-//                )
+                .cream(options.getCream())
+                .finition(options.getFinition())
+                .paste(options.getPaste())
                 .build();
     }
 }

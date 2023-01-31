@@ -49,7 +49,15 @@ public class ProductsDto {
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
-    private Map<String, String> listOption;
+    private String cream;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String finition;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String paste;
 
     public static ProductsDto fromEntity(Products products) {
 
@@ -61,6 +69,9 @@ public class ProductsDto {
                 .image(products.getImage())
                 .categoryName(products.getCategory().getName())
                 .optionsName(products.getOptions().getTypeOption())
+                .cream(products.getOptions().getCream())
+                .finition(products.getOptions().getFinition())
+                .paste(products.getOptions().getPaste())
                 .build();
     }
 
@@ -80,7 +91,9 @@ public class ProductsDto {
                 .options(
                         Options.builder()
                                 .typeOption(products.getOptionsName())
-                                .listOption(products.getListOption())
+                                .cream(products.getCream())
+                                .finition(products.getFinition())
+                                .paste(products.getPaste())
                                 .build()
                 )
                 .build();

@@ -27,7 +27,19 @@ public class Options extends AbstractEntity {
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
-    private Map<String, String> listOption;
+    private String cream;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String finition;
+
+    @Type( type = "json" )
+    @Column(columnDefinition = "json")
+    private String paste;
+
+//    @Type( type = "json" )
+//    @Column(columnDefinition = "json")
+//    private Map<String, String> listOption;
 
 //    @OneToOne
 //    private Category category;

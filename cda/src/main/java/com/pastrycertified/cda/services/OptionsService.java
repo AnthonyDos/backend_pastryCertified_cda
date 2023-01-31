@@ -10,4 +10,6 @@ public interface OptionsService {
     Options save(OptionsDto dto);
 
     List<OptionsDto> findAll();
+
+    OptionsDto findByName(String typeOption);
 }

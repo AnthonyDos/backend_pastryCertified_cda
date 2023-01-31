@@ -7,6 +7,7 @@ import com.pastrycertified.cda.services.OptionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,11 +19,8 @@ public class OptionsServiceImpl implements OptionsService {
 
     @Override
     public Options save(OptionsDto dto) {
-        System.out.println(dto + " dto");
         Options option = OptionsDto.toEntity(dto);
         option.setTypeOption(option.getTypeOption());
-        option.setListOption(option.getListOption());
-        //option.setCategory(option.getCategory());
         return optionsRepository.save(option);
     }
 
@@ -34,5 +32,11 @@ public class OptionsServiceImpl implements OptionsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public OptionsDto findByName(String typeOption) {
+        return optionsRepository.findByTypeOption(typeOption)
+                .map(OptionsDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("Ce n type d'option n'existe pas"));
+    }
 
 }
