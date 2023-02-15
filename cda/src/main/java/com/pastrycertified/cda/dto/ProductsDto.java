@@ -15,7 +15,6 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Map;
 
 
 @Getter

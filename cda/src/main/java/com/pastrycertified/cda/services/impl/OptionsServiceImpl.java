@@ -36,7 +36,12 @@ public class OptionsServiceImpl implements OptionsService {
     public OptionsDto findByName(String typeOption) {
         return optionsRepository.findByTypeOption(typeOption)
                 .map(OptionsDto::fromEntity)
-                .orElseThrow(() -> new EntityNotFoundException("Ce n type d'option n'existe pas"));
+                .orElseThrow(() -> new EntityNotFoundException("Ce type d'option n'existe pas"));
+    }
+
+    @Override
+    public void delete(Integer id) {
+        optionsRepository.deleteById(id);
     }
 
 }

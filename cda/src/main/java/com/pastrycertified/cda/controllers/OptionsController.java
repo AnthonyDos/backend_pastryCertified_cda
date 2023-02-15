@@ -33,4 +33,12 @@ public class OptionsController {
     ) {
         return ResponseEntity.ok(optionsService.findByName(optionType));
     }
+
+    @DeleteMapping("/{option-id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable("option-id") Integer id
+    ) {
+        optionsService.delete(id);
+        return ResponseEntity.accepted().build();
+    }
 }

@@ -12,4 +12,6 @@ public interface OptionsService {
     List<OptionsDto> findAll();
 
     OptionsDto findByName(String typeOption);
+
+    void delete(Integer id);
 }
