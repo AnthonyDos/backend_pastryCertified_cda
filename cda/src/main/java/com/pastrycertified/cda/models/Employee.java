@@ -19,7 +19,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Salary extends AbstractEntityUser implements UserDetails {
+public class Employee extends AbstractEntityUser implements UserDetails {
 
 
     private String cast_member;

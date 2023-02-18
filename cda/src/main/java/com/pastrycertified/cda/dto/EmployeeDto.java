@@ -1,7 +1,6 @@
 package com.pastrycertified.cda.dto;
 
-import com.pastrycertified.cda.models.Address;
-import com.pastrycertified.cda.models.Salary;
+import com.pastrycertified.cda.models.Employee;
 import com.pastrycertified.cda.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @Builder
-public class SalaryDto {
+public class EmployeeDto {
 
     private Integer id;
 
@@ -46,23 +45,23 @@ public class SalaryDto {
 
     private String role_name;
 
-    public static SalaryDto fromEntity(Salary salary) {
+    public static EmployeeDto fromEntity(Employee employee) {
 
-        return SalaryDto.builder()
-                .id(salary.getId())
-                .lastname(salary.getLastname())
-                .firstname(salary.getFirstname())
-                .email(salary.getEmail())
-                .password(salary.getPassword())
-                .phone(salary.getPhone())
-                .cast_member(salary.getCast_member())
-                .role_name(salary.getRole().getName())
+        return EmployeeDto.builder()
+                .id(employee.getId())
+                .lastname(employee.getLastname())
+                .firstname(employee.getFirstname())
+                .email(employee.getEmail())
+                .password(employee.getPassword())
+                .phone(employee.getPhone())
+                .cast_member(employee.getCast_member())
+                .role_name(employee.getRole().getName())
                 .build();
     }
 
-    public static Salary toEntity(SalaryDto salary) {
+    public static Employee toEntity(EmployeeDto salary) {
 
-        return Salary.builder()
+        return Employee.builder()
                 .id(salary.getId())
                 .lastname(salary.getLastname())
                 .firstname(salary.getFirstname())

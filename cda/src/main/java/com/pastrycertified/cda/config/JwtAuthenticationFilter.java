@@ -1,6 +1,6 @@
 package com.pastrycertified.cda.config;
 
-import com.pastrycertified.cda.repository.SalaryRepository;
+import com.pastrycertified.cda.repository.EmployeeRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
-    private final SalaryRepository salaryRepository;
+    private final EmployeeRepository employeeRepository;
 
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
@@ -67,9 +67,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     }
                 }
 
-                if (!salaryRepository.findByEmail(userEmail).isEmpty()) {
+                if (!employeeRepository.findByEmail(userEmail).isEmpty()) {
 
-                    UserDetails userDetail = salaryRepository.findByEmail(userEmail)
+                    UserDetails userDetail = employeeRepository.findByEmail(userEmail)
                             .orElseThrow(() -> new EntityNotFoundException("salarié token corrompu"));
                     if (jwtUtils.isTokenValid(jwt, userDetail)) {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken

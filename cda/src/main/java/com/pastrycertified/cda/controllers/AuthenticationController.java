@@ -1,7 +1,7 @@
 package com.pastrycertified.cda.controllers;
 
 import com.pastrycertified.cda.dto.*;
-import com.pastrycertified.cda.services.SalaryService;
+import com.pastrycertified.cda.services.EmployeeService;
 import com.pastrycertified.cda.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final UserService userService;
-    private final SalaryService salaryService;
+    private final EmployeeService employeeService;
 
     @PostMapping("${auth.register}")
     public ResponseEntity<AuthenticationResponse> register(
@@ -35,30 +35,30 @@ public class AuthenticationController {
 
     @PostMapping("${auth.register.admin}")
     public ResponseEntity<AuthenticationResponse> registerAdmin(
-            @RequestBody SalaryDto salary
+            @RequestBody EmployeeDto salary
     ) {
-        return ResponseEntity.ok(salaryService.register(salary));
+        return ResponseEntity.ok(employeeService.register(salary));
     }
 
     @PostMapping("${auth.authenticate.admin}")
     public ResponseEntity<AuthenticationResponse> authenticateAdmin(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(salaryService.authenticate(request));
+        return ResponseEntity.ok(employeeService.authenticate(request));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("${auth.register.pastryChef}")
     public ResponseEntity<Integer> savePastryChef(
-            @RequestBody SalaryDto salaryDto
+            @RequestBody EmployeeDto employeeDto
     ) {
-        return ResponseEntity.ok(salaryService.savePastryChef(salaryDto));
+        return ResponseEntity.ok(employeeService.savePastryChef(employeeDto));
     }
 
     @PostMapping("${auth.authenticate.pastyChef}")
     public ResponseEntity<AuthenticationResponse> registerPastryChef(
-            @RequestBody SalaryDto salary
+            @RequestBody EmployeeDto salary
     ) {
-        return ResponseEntity.ok(salaryService.registerPastryChef(salary));
+        return ResponseEntity.ok(employeeService.registerPastryChef(salary));
     }
 }

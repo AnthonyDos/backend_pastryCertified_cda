@@ -1,6 +1,6 @@
 package com.pastrycertified.cda.services.auth;
 
-import com.pastrycertified.cda.repository.SalaryRepository;
+import com.pastrycertified.cda.repository.EmployeeRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final SalaryRepository salaryRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -25,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     .orElseThrow(()-> new EntityNotFoundException("Pas d'utilisateur trouvé provenant de cette email"));
         }
 
-        if (!salaryRepository.findByEmail(email).isEmpty()) {
-            return salaryRepository.findByEmail(email)
+        if (!employeeRepository.findByEmail(email).isEmpty()) {
+            return employeeRepository.findByEmail(email)
                     .orElseThrow(()-> new EntityNotFoundException("Pas de salarié trouvé provenant de cette email"));
         }
-        return salaryRepository.findByEmail(email).orElseThrow(()-> new EntityNotFoundException("aucun user trouvé provenant de cette email"));
+        return employeeRepository.findByEmail(email).orElseThrow(()-> new EntityNotFoundException("aucun user trouvé provenant de cette email"));
     }
 }
 

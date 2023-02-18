@@ -64,10 +64,11 @@ public class SecurityConfig {
                                                 "/**/shop/**",
                                                 "/**/categories/**",
                                                 "/**/options/**",
-                                                "/**/orders/**"
+                                                "/**/orders/**",
+                                                "**/employees/**"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
                                         .antMatchers(
-                                                "/**/salary/**",
+                                                "/**/employees/**",
                                                 "/**/orders/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()
