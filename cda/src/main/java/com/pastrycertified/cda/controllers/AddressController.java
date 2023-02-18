@@ -10,38 +10,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("${url.address}")
 @RequiredArgsConstructor
 public class AddressController {
 
     private final AddressService addressService;
 
 
-    @PostMapping("/")
+    @PostMapping("${create.address}")
     public ResponseEntity<Integer> save(
             @RequestBody AddressDto addressDto
             ) {
         return ResponseEntity.ok(addressService.save(addressDto));
     }
 
-    @GetMapping("/address-user/{user-id}")
+    @GetMapping("${address.userId}")
     public ResponseEntity<AddressDto> findAddressByIdUser(
             @PathVariable("user-id") Integer id
     ) {
         return ResponseEntity.ok(addressService.findAddressByIdUser(id));
     }
 
-    @GetMapping("/{address-id}")
+    @GetMapping("${address.id}")
     public ResponseEntity<AddressDto> findById(
             @PathVariable("address-id") Integer id
     ) {
         return ResponseEntity.ok(addressService.findById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("${get.all.addresses}")
     public ResponseEntity<List<AddressDto>> findAll() { return ResponseEntity.ok(addressService.findAll());}
 
-    @PatchMapping("/update-address/{address-id}")
+    @PatchMapping("${update.address}")
     public ResponseEntity<Integer> updateAddress(
             @PathVariable("address-id") Integer id,
             @RequestBody AddressDto dto
@@ -49,7 +49,7 @@ public class AddressController {
         return ResponseEntity.ok(addressService.updateByid(id, dto));
     }
 
-    @DeleteMapping("/{address-id}")
+    @DeleteMapping("${delete.address}")
     public ResponseEntity<Void> delete(
             @PathVariable("address-id") Integer id
     ) {

@@ -1,29 +1,25 @@
 package com.pastrycertified.cda.controllers;
 
-
-import com.pastrycertified.cda.dto.OptionsDto;
 import com.pastrycertified.cda.dto.ProductsDto;
 import com.pastrycertified.cda.models.Products;
 import com.pastrycertified.cda.services.ProductsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("${url.products}")
 @RequiredArgsConstructor
 public class ProductsController {
 
     private final ProductsService service;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping(value = "/")
+    @PostMapping(value = "${create.product}")
     public Products saveProduct(
             @RequestPart("name") String name,
             @RequestPart("ingredients") String ingredients,
@@ -39,20 +35,20 @@ public class ProductsController {
     }
 
 
-    @GetMapping("/{product-id}")
+    @GetMapping("${product.id}")
     public ResponseEntity<ProductsDto>findProductById(
             @PathVariable("product-id") Integer productId
     ) {
         return ResponseEntity.ok(service.findById(productId));
     }
 
-    @GetMapping("/all-products")
+    @GetMapping("${all.products}")
     public ResponseEntity<List<ProductsDto>>findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PatchMapping("/update-product/{product-id}")
+    @PatchMapping("${update.product}")
     public ResponseEntity<Integer> updateProduct(
             @PathVariable("product-id") Integer productId,
             @RequestBody ProductsDto products
@@ -61,7 +57,7 @@ public class ProductsController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{product-id}")
+    @DeleteMapping("${delete.product}")
     public ResponseEntity<Void>delete(
             @PathVariable("product-id") Integer productId
     ) {

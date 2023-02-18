@@ -10,30 +10,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/options")
+@RequestMapping("${url.options}")
 @RequiredArgsConstructor
 public class OptionsController {
 
     private final OptionsService optionsService;
 
-    @PostMapping("/")
+    @PostMapping("${create.option}")
     public ResponseEntity<Options> save(
             @RequestBody OptionsDto options
     ) {
         return ResponseEntity.ok(optionsService.save(options));
     }
 
-    @GetMapping("/all")
+    @GetMapping("${all.options}")
     public ResponseEntity<List<OptionsDto>>findAll() { return ResponseEntity.ok(optionsService.findAll());}
 
-    @GetMapping("/{option-type}")
+    @GetMapping("${option.by.type}")
     public ResponseEntity<OptionsDto>findOptionByType (
             @PathVariable("option-type")String optionType
     ) {
         return ResponseEntity.ok(optionsService.findByName(optionType));
     }
 
-    @DeleteMapping("/{option-id}")
+    @DeleteMapping("${delete.option.id}")
     public ResponseEntity<Void> delete(
             @PathVariable("option-id") Integer id
     ) {

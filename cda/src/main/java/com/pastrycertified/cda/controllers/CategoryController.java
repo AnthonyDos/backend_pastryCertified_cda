@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("${url.categorie}")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/all-categories")
+    @GetMapping("${all.categories}")
     public ResponseEntity<List<CategoryDto>>findAll() { return ResponseEntity.ok(categoryService.findAll());}
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete-category/{category-id}")
+    @DeleteMapping("${delete.category.id}")
     public ResponseEntity<Void>delete(
             @PathVariable("category-id") Integer categoryId
     ) {

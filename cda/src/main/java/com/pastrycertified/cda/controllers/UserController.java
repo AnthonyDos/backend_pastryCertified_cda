@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("${url.users}")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService service;
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @PostMapping("/")
+    @PostMapping("${create.user}")
     public ResponseEntity<Integer> save(
             @RequestBody UserDto userDto
             ) {
@@ -24,11 +24,11 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/")
+    @GetMapping("${all.users}")
     public ResponseEntity<List<UserDto>> findAll() { return ResponseEntity.ok(service.findAll()); }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @GetMapping("/{user-id}")
+    @GetMapping("${user.id}")
     public ResponseEntity<UserDto> findUserById(
             @PathVariable("user-id") Integer userId
     ) {
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PatchMapping("/update/{user-id}")
+    @PatchMapping("${update.userId}")
     public ResponseEntity<Integer> updateAccount(
             @PathVariable("user-id") Integer userId,
             @RequestBody UserDto user
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{user-id}")
+    @DeleteMapping("${delete.userId}")
     public ResponseEntity<Void> delete(
             @PathVariable("user-id") Integer userId
     ) {

@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/salary")
+@RequestMapping("${url.salaries}")
 @RequiredArgsConstructor
 public class SalaryController {
 
     private final SalaryService service;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/")
+    @PostMapping("${create.salary}")
     public ResponseEntity<Integer> save(
             @RequestBody SalaryDto salaryDto
             ) {
@@ -25,11 +25,11 @@ public class SalaryController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/")
+    @GetMapping("${all.salaries}")
     public ResponseEntity<List<SalaryDto>> findAll() { return ResponseEntity.ok(service.findAll()); }
 
     @PreAuthorize("hasRole('ROLE_PASTRYCHEF') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/{salary-id}")
+    @GetMapping("${salary.id}")
     public ResponseEntity<SalaryDto>findById(
             @PathVariable("salary-id") Integer salaryId
     ) {
@@ -37,7 +37,7 @@ public class SalaryController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PatchMapping("/update/{salary-id}")
+    @PatchMapping("${update.salary}")
     public ResponseEntity<Integer> update(
             @PathVariable("salary-id") Integer salaryId,
             @RequestBody SalaryDto salaryDto
@@ -46,7 +46,7 @@ public class SalaryController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{salary-id}")
+    @DeleteMapping("${delete.salary}")
     public ResponseEntity<Void> delete(
             @PathVariable("salary-id") Integer salaryId
     ) {
