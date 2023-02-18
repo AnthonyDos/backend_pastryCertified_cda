@@ -36,9 +36,6 @@ public class OptionsDto {
     @Type( type = "json" )
     @Column(columnDefinition = "json")
     private String paste;
-//    @Type( type = "json" )
-//    @Column(columnDefinition = "json")
-//    private Map<String, String> listOption;
 
     private String nameCategory;
 

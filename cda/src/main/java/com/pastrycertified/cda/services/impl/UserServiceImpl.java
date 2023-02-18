@@ -77,27 +77,21 @@ public class UserServiceImpl implements UserService {
         if ( dto.getEmail() != null ) {
             ifUser.setEmail(dto.getEmail());
         }
-
         if ( dto.getBirth_day() != null ) {
             ifUser.setBirth_day(dto.getBirth_day());
         }
-
         if ( dto.getCivility() != null ) {
             ifUser.setCivility(dto.getCivility());
         }
-
         if ( dto.getFirstname() != null ) {
             ifUser.setFirstname(dto.getFirstname());
         }
-
         if ( dto.getLastname() != null ) {
             ifUser.setLastname(dto.getLastname());
         }
-
         if ( dto.getPassword() != null ) {
             ifUser.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
-
         if ( dto.getPhone() != null ) {
             ifUser.setPhone(dto.getPhone());
         }

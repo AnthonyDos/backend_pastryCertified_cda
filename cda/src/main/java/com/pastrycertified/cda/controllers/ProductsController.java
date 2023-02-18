@@ -57,10 +57,6 @@ public class ProductsController {
             @PathVariable("product-id") Integer productId,
             @RequestBody ProductsDto products
     ) {
-
-        System.out.println(products.getCategoryName() + " category controller");
-        System.out.println(products.getOptionsName() + " update product and option");
-        System.out.println(products.getIngredients() + " update product and option");
         return ResponseEntity.ok(service.updateByid(productId,products));
     }
 

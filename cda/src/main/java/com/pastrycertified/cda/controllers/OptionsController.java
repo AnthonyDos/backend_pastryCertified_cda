@@ -20,7 +20,6 @@ public class OptionsController {
     public ResponseEntity<Options> save(
             @RequestBody OptionsDto options
     ) {
-        System.out.println(options);
         return ResponseEntity.ok(optionsService.save(options));
     }
 

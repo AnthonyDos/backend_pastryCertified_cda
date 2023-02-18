@@ -44,7 +44,6 @@ public class AddressDto {
     private Integer id_user;
 
     public static AddressDto fromEntity(Address address) {
-        System.out.println(address.getId());
         return AddressDto.builder()
                 .id(address.getId())
                 .address_number(address.getAddress_number())

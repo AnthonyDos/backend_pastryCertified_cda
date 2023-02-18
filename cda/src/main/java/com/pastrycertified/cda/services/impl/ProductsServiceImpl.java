@@ -84,13 +84,9 @@ public class ProductsServiceImpl implements ProductsService {
         if (dto.getCategoryName() != null) {
             products.setCategory(findOrCreateCategory(dto.getCategoryName()));
         }
-        System.out.println(dto.getOptionsName() + " name option");
-        System.out.println(dto.getCream() + " name cream");
-        System.out.println(dto.getFinition() + " name finition");
         if (dto.getOptionsName() != null || dto.getCream() != null || dto.getFinition() != null || dto.getPaste() != null) {
             products.setOptions(findByTypeOption(dto.getOptionsName(), dto.getCream(), dto.getFinition(), dto.getPaste()));
         }
-        System.out.println(products + " list products details");
         productsRepository.save(products);
         return products.getId();
     }
@@ -101,7 +97,6 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     private Category findOrCreateCategory(String categoryName) {
-        System.out.println(categoryName  +" category name test");
         Category category = categoryRepository.findByName(categoryName)
                 .orElse(null);
         if (category == null) {
@@ -115,7 +110,6 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     private Options findByTypeOption (String typeOption, String cream, String finition, String paste) {
-        System.out.println(typeOption + " typeppepep");
         Options options = optionsRepository.findByTypeOption(typeOption)
                 .orElse(null);
 

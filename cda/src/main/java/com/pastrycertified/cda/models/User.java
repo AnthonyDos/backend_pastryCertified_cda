@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Data
 @SuperBuilder
@@ -32,6 +33,9 @@ public class User extends AbstractEntityUser implements UserDetails{
 
     @OneToOne
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Orders> order;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

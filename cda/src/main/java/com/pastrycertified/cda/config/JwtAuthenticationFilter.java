@@ -53,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             jwt = authHeader.substring(7);
             userEmail = jwtUtils.extractUsername(jwt);
-            System.out.println(userEmail);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -63,7 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (jwtUtils.isTokenValid(jwt, userDetails)) {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                                 = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                        System.out.println(userDetails.getAuthorities() + " authoritie");
                         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     }
@@ -73,12 +71,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     UserDetails userDetail = salaryRepository.findByEmail(userEmail)
                             .orElseThrow(() -> new EntityNotFoundException("salarié token corrompu"));
-                    System.out.println(userDetail + " user details");
                     if (jwtUtils.isTokenValid(jwt, userDetail)) {
-                        System.out.println(userDetail + " user details 2");
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                                 = new UsernamePasswordAuthenticationToken(userDetail, "le token est expiré", userDetail.getAuthorities());
-                        System.out.println(userDetail.getAuthorities() + " authoritie admin");
                         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     }

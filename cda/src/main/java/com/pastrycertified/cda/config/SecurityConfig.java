@@ -56,14 +56,19 @@ public class SecurityConfig {
                                         .permitAll()
                                         .antMatchers(
                                                 "/**/users/",
-                                                "/**/users/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                                                "/**/users/**",
+                                                "/**/orders/id",
+                                                "/**/orders/user/id").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",
                                                 "/**/categories/**",
-                                                "/**/options/**"
+                                                "/**/options/**",
+                                                "/**/orders/**"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
-                                        .antMatchers("/**/salary/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
+                                        .antMatchers(
+                                                "/**/salary/**",
+                                                "/**/orders/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()
                                         .and()
@@ -73,7 +78,6 @@ public class SecurityConfig {
                                         .exceptionHandling()
                                         .accessDeniedHandler(accessDeniedHandler());
                             } catch (Exception e) {
-                                System.out.println(e.getMessage());
                                 e.printStackTrace();
                             }
                         }

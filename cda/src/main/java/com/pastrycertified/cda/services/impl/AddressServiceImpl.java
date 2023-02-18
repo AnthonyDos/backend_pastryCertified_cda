@@ -30,7 +30,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private User addAddressUser(Integer id) {
-        System.out.println(id + " adress test");
         User user = userRepository.findUserById(id)
                 .orElse(null);
 
