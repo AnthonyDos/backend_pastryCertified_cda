@@ -80,6 +80,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return invoiceNumber;
     }
+
     public static String generateInvoiceCharacters(int length, int lengthNumber) {
         String characters = GenerateCharactersInvoice.CHARACTERS.getValue();
         String numbers = GenerateCharactersInvoice.NUMBERS.getValue();

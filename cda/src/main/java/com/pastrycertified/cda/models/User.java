@@ -26,9 +26,8 @@ public class User extends AbstractEntityUser implements UserDetails{
 
     private String birth_day;
 
-    private Integer idAddress;
-
     @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @OneToOne

@@ -64,12 +64,6 @@ public class AddressDto {
                 .zipCode(address.getZipCode())
                 .city(address.getCity())
                 .country(address.getCountry())
-                .user(
-                        User.builder()
-                                .id(address.getId_user())
-                                .idAddress(address.getId())
-                                .build()
-                )
                 .build();
     }
 }

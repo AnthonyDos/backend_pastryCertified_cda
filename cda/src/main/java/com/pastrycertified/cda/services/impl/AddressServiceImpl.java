@@ -1,6 +1,7 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.dto.AddressDto;
+import com.pastrycertified.cda.dto.UserDto;
 import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.User;
 import com.pastrycertified.cda.repository.AddressRepository;
@@ -26,23 +27,15 @@ public class AddressServiceImpl implements AddressService {
     public Integer save(AddressDto dto) {
         validator.validate(dto);
         Address address = AddressDto.toEntity(dto);
+        address.setUser(
+                User.builder()
+                        .id(dto.getId_user())
+                        .build()
+        );
+
+        userRepository.updateByIdUser(addressRepository.save(address).getId(),dto.getId_user());
         return addressRepository.save(address).getId();
     }
-
-    private User addAddressUser(Integer id) {
-        User user = userRepository.findUserById(id)
-                .orElse(null);
-
-        if (user.getIdAddress() == null ) {
-            return userRepository.save(
-                    User.builder()
-                            .idAddress(id)
-                            .build()
-            );
-        }
-        return user;
-    }
-
 
     @Override
     public List<AddressDto> findAll() {
@@ -98,4 +91,5 @@ public class AddressServiceImpl implements AddressService {
     public void delete(Integer id) {
         addressRepository.deleteById(id);
     }
+
 }
