@@ -104,7 +104,6 @@ public class OrderServiceImpl implements OrderService {
         return order.getId();
     }
 
-
     @Override
     public void delete(Integer id) {
         orderRepository.deleteById(id);
@@ -114,5 +113,4 @@ public class OrderServiceImpl implements OrderService {
         UUID uuid = UUID.randomUUID();
         return uuid;
     }
-
 }

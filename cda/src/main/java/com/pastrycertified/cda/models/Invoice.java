@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import java.math.BigDecimal;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Data
 @SuperBuilder
@@ -17,7 +19,15 @@ import java.math.BigDecimal;
 @Entity
 public class Invoice extends AbstractEntity {
 
-    private BigDecimal invoice_number;
+    private String invoice_number;
 
     private String details;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Orders orders;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

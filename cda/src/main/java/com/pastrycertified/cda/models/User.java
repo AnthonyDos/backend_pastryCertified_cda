@@ -37,6 +37,9 @@ public class User extends AbstractEntityUser implements UserDetails{
     @OneToMany(mappedBy = "user")
     private Set<Orders> order;
 
+//    @OneToMany(mappedBy = "user_invoice")
+//    private Set<Invoice> invoice;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
