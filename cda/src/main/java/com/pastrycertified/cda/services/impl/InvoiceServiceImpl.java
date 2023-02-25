@@ -18,10 +18,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final ObjectsValidator validator;
 
+    private final Integer LENGTH_CHARACTERS = 3;
+    private final Integer LENGTH_NUMBERS = 4;
+
     @Override
     public Integer save(InvoiceDto dto) {
         validator.validate(dto);
-        String invoiceNumber = generateInvoiceCharacters(3,4);
+        String invoiceNumber = generateInvoiceCharacters(LENGTH_CHARACTERS,LENGTH_NUMBERS);
 
         Invoice invoice = InvoiceDto.toEntity(dto);
         invoice.setInvoice_number(controlInvoiceNumberIfExist(invoiceNumber));
@@ -60,7 +63,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoice = invoiceRepository.findByInvoiceNumber(invoiceNumber)
                 .orElse(null);
         if (invoice != null) {
-            return  generateInvoiceCharacters(1, 4);
+            return  generateInvoiceCharacters(LENGTH_CHARACTERS, LENGTH_NUMBERS);
         }
 
         return invoiceNumber;
