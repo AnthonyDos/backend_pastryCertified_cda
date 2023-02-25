@@ -5,10 +5,9 @@ import com.pastrycertified.cda.services.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("${url.invoice}")
@@ -23,4 +22,12 @@ public class InvoiceController {
             ) {
         return ResponseEntity.ok(invoiceService.save(invoiceDto));
     }
+
+    @GetMapping("${all.invoices}")
+    public ResponseEntity<List<InvoiceDto>>findAll() { return ResponseEntity.ok(invoiceService.findAll());}
+
+    @GetMapping("${all.invoices.userId}")
+    public ResponseEntity<List<InvoiceDto>>findAllByUserId(
+            @PathVariable("user-id") Integer userId
+    ) { return ResponseEntity.ok(invoiceService.findAllByUserId(userId));}
 }

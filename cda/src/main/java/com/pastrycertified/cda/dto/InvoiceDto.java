@@ -22,6 +22,10 @@ public class InvoiceDto {
 
     private Integer orderId;
 
+    private OrderDto orderDto;
+
+    private UserDto userDto;
+
     private Integer userId;
 
     public static InvoiceDto fromEntity(Invoice invoice) {
@@ -31,7 +35,9 @@ public class InvoiceDto {
                 .invoice_number(invoice.getInvoice_number())
                 .details(invoice.getDetails())
                 .orderId(invoice.getOrders().getId())
+                .orderDto(OrderDto.fromEntity(invoice.getOrders()))
                 .userId(invoice.getUser().getId())
+                .userDto(UserDto.fromEntity(invoice.getUser()))
                 .build();
     }
 

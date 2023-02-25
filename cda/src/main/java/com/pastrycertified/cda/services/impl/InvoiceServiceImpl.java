@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +42,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceDto> findAll() {
-        return null;
+        return invoiceRepository.findAll()
+                .stream()
+                .map(InvoiceDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InvoiceDto> findAllByUserId(Integer userId) {
+        return invoiceRepository.findAllInvoicesByUserId(userId)
+                .stream()
+                .map(InvoiceDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
