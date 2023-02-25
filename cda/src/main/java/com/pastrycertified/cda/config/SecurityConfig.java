@@ -42,7 +42,6 @@ public class SecurityConfig {
                                 request.antMatchers(
                                                 "/**/authenticate",
                                                 "/**/register","**/addresses",
-                                                "/**/register-admin",
                                                 "/**/authenticate-admin",
                                                 "/**/categories/all-categories"
                                 )
@@ -56,6 +55,7 @@ public class SecurityConfig {
                                                 "**/invoices/all-invoices/{user-id}",
                                                 "**/invoices/invoice/{invoice-id}").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
+                                                "/**/register-admin", a
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",
                                                 "/**/categories/**",
