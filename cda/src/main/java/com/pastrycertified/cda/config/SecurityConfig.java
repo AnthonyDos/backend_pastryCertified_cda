@@ -52,7 +52,9 @@ public class SecurityConfig {
                                                 "/**/users/**",
                                                 "/**/orders/id",
                                                 "/**/orders/",
-                                                "/**/orders/user/{id}").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                                                "/**/orders/user/{id}",
+                                                "**/invoices/all-invoices/{user-id}",
+                                                "**/invoices/invoice/{invoice-id}").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",
@@ -62,7 +64,8 @@ public class SecurityConfig {
                                                 "**/employees/**"
                                                 ).access("hasRole('ROLE_ADMIN')")//authorisé ces url
                                         .antMatchers(
-                                                "/**/employees/**",
+                                                "/**/employees/{employee-id}",
+                                                "/**/employees/update/{employee-id}",
                                                 "/**/orders/**").access("hasRole('PASTRY_CHEF') or hasRole('ROLE_ADMIN')")
                                         .anyRequest()//toutes les autres requêtes doivent être authentifiés
                                         .authenticated()

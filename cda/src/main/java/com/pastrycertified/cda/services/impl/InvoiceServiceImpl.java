@@ -8,6 +8,7 @@ import com.pastrycertified.cda.validators.ObjectsValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -48,16 +49,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public InvoiceDto findById(Integer id) {
+        return invoiceRepository.findById(id)
+                .map(InvoiceDto::fromEntity)
+                .orElseThrow(()-> new EntityNotFoundException("aucune facture avec l' id " + id));
+    }
+
+    @Override
     public List<InvoiceDto> findAllByUserId(Integer userId) {
         return invoiceRepository.findAllInvoicesByUserId(userId)
                 .stream()
                 .map(InvoiceDto::fromEntity)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public InvoiceDto findById(Integer id) {
-        return null;
     }
 
     @Override

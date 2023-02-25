@@ -25,10 +25,18 @@ public class InvoiceController {
     @GetMapping("${all.invoices}")
     public ResponseEntity<List<InvoiceDto>>findAll() { return ResponseEntity.ok(invoiceService.findAll());}
 
+    @GetMapping("${invoice.invoiceId}")
+    public ResponseEntity<InvoiceDto>findById(
+            @PathVariable("invoice-id") Integer invoiceId
+    ) {
+        return ResponseEntity.ok(invoiceService.findById(invoiceId));
+    }
+
     @GetMapping("${all.invoices.userId}")
     public ResponseEntity<List<InvoiceDto>>findAllByUserId(
             @PathVariable("user-id") Integer userId
     ) { return ResponseEntity.ok(invoiceService.findAllByUserId(userId));}
+
 
     @DeleteMapping("${delete.invoice.invoiceId}")
     public ResponseEntity<Void> delete(
