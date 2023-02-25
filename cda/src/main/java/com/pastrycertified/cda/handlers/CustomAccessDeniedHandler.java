@@ -20,8 +20,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         response.setStatus(403);
         response.getWriter().write("Vous n'etes pas autorise a acceder a cette page");
-        log.error("l'utilisateur n'est pas autorisé à acceder à cette page");
-        //response.sendRedirect(request.getContextPath()+ "/access-denied");
+        log.info("l'utilisateur n'est pas autorisé à acceder à cette page");
 
     }
 }

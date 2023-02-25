@@ -59,7 +59,7 @@ public class SecurityConfig {
                                                 "/**/users/**",
                                                 "/**/orders/id",
                                                 "/**/orders/",
-                                                "/**/orders/user/id").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                                                "/**/orders/user/{id}").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",

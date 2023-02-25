@@ -51,6 +51,8 @@ public class OrderDto {
 
     private Integer user_id;
 
+    private UserDto userDto;
+
 
     public static OrderDto fromEntity(Orders order) {
         return OrderDto.builder()
@@ -62,6 +64,7 @@ public class OrderDto {
                 .price(order.getPrice())
                 .order_status(order.getOrder_status())
                 .user_id(order.getUser().getId())
+                .userDto(UserDto.fromEntity(order.getUser()))
                 .build();
     }
 

@@ -18,7 +18,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
     private final ObjectsValidator validator;
-
     private final Integer LENGTH_CHARACTERS = 3;
     private final Integer LENGTH_NUMBERS = 4;
 
