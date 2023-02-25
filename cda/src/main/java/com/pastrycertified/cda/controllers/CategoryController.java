@@ -20,6 +20,14 @@ public class CategoryController {
     @GetMapping("${all.categories}")
     public ResponseEntity<List<CategoryDto>>findAll() { return ResponseEntity.ok(categoryService.findAll());}
 
+    @GetMapping("${category.id}")
+    public ResponseEntity<CategoryDto> findById(
+            @PathVariable("category-id") Integer categoryId
+    ) {
+        return ResponseEntity.ok(categoryService.findById(categoryId));
+    }
+
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("${delete.category.id}")
     public ResponseEntity<Void>delete(

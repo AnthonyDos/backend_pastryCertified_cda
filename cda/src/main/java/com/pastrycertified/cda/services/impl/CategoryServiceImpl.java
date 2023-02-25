@@ -7,6 +7,7 @@ import com.pastrycertified.cda.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryDto findById(Integer categoryId) {
+        return categoryRepository.findById(categoryId)
+                .map(CategoryDto::fromEntity)
+                .orElseThrow(()-> new EntityNotFoundException("aucune catégorie correspondant à cet id " + categoryId));
+    }
+
+    @Override
     public void delete(Integer id) {
         categoryRepository.deleteById(id);
     }
+
 }

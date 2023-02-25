@@ -41,9 +41,16 @@ public class SecurityConfig {
                                 //toute url qui contient auth et toutes celles qui contiennet enregistrement
                                 request.antMatchers(
                                                 "/**/authenticate",
-                                                "/**/register","**/addresses",
+                                                "/**/register",
+                                                "**/addresses",
                                                 "/**/authenticate-admin",
-                                                "/**/categories/all-categories"
+                                                "/**/shop/all-shops/",
+                                                "/**/shop/all-shops/{shop-id}",
+                                                "**/products/",
+                                                "**/products/all-products",
+                                                "**/products/{product-id}",
+                                                "/**/categories/all-categories",
+                                                "/**/categories/{category-id}"
                                 )
                                         .permitAll()
                                         .antMatchers(
@@ -55,7 +62,7 @@ public class SecurityConfig {
                                                 "**/invoices/all-invoices/{user-id}",
                                                 "**/invoices/invoice/{invoice-id}").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                                         .antMatchers(
-                                                "/**/register-admin", a
+                                                "/**/register-admin",
                                                 "/**/register-pastrychef",
                                                 "/**/shop/**",
                                                 "/**/categories/**",
