@@ -30,4 +30,12 @@ public class InvoiceController {
     public ResponseEntity<List<InvoiceDto>>findAllByUserId(
             @PathVariable("user-id") Integer userId
     ) { return ResponseEntity.ok(invoiceService.findAllByUserId(userId));}
+
+    @DeleteMapping("${delete.invoice.invoiceId}")
+    public ResponseEntity<Void> delete(
+            @PathVariable("invoice-id") Integer invoiceId
+    ) {
+        invoiceService.delete(invoiceId);
+        return ResponseEntity.accepted().build();
+    }
 }

@@ -67,7 +67,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void delete(Integer id) {
-
+        invoiceRepository.deleteById(id);
     }
 
     private String controlInvoiceNumberIfExist(String invoiceNumber) {
