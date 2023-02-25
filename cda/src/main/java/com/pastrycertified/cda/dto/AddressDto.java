@@ -1,13 +1,11 @@
 package com.pastrycertified.cda.dto;
 
 import com.pastrycertified.cda.models.Address;
-import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,7 +19,6 @@ public class AddressDto {
     private Integer id;
 
     @NotNull(message = "le numéro de rue ne peut pas être null")
-    //@NotEmpty(message = "le numéro de rue ne peut pas être null")
     private Integer address_number;
 
     @NotNull(message = "le nom de la rue ne peut pas être null")

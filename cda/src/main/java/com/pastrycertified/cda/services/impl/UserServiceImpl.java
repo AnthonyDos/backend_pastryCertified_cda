@@ -1,15 +1,11 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.config.JwtUtils;
-import com.pastrycertified.cda.controllers.AddressController;
-import com.pastrycertified.cda.dto.AddressDto;
 import com.pastrycertified.cda.dto.AuthenticationRequest;
 import com.pastrycertified.cda.dto.AuthenticationResponse;
 import com.pastrycertified.cda.dto.UserDto;
-import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
-import com.pastrycertified.cda.repository.AddressRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.UserService;

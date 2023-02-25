@@ -101,9 +101,4 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         return randomString.toString().toUpperCase() + randomNumber.toString();
     }
-
-    @Override
-    public Invoice save(Options dto) {
-        return null;
-    }
 }

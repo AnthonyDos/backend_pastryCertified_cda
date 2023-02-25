@@ -19,6 +19,5 @@ public class Image extends AbstractEntity {
     private byte[] image;
 
     @OneToOne
-    //@JoinColumn(name = "id", referencedColumnName = "id")
     private Shop shop;
 }

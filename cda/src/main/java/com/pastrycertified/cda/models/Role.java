@@ -16,8 +16,4 @@ import javax.persistence.Entity;
 public class Role extends AbstractEntity {
 
     private String name;
-
-//    @OneToOne
-//    @JoinColumn(name = "id_user")
-//    private User user;
 }

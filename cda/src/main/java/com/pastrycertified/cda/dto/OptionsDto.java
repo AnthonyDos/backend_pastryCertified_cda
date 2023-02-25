@@ -1,6 +1,5 @@
 package com.pastrycertified.cda.dto;
 
-import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.models.Options;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
@@ -9,7 +8,6 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.Column;
-import java.util.Map;
 
 @Getter
 @Setter

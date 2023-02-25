@@ -4,7 +4,6 @@ import com.pastrycertified.cda.dto.InvoiceDto;
 import com.pastrycertified.cda.services.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

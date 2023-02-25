@@ -1,18 +1,12 @@
 package com.pastrycertified.cda.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pastrycertified.cda.models.Abstract.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Data
 @SuperBuilder

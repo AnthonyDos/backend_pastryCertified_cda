@@ -1,6 +1,5 @@
 package com.pastrycertified.cda.dto;
 
-import com.pastrycertified.cda.models.Image;
 import com.pastrycertified.cda.models.Shop;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

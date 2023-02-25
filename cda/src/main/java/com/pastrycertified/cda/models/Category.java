@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.Set;
 
 
 @Data
@@ -21,8 +20,5 @@ public class Category extends AbstractEntity {
 
     @OneToOne
     private Options options;
-//
-//    @ManyToMany
-//    Set<OptionsCream> CategoryOptionCream;
 
 }

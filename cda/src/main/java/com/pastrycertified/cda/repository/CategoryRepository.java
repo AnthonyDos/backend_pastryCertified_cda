@@ -1,6 +1,5 @@
 package com.pastrycertified.cda.repository;
 
-import com.pastrycertified.cda.dto.CategoryDto;
 import com.pastrycertified.cda.models.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 

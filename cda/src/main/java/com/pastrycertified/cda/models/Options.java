@@ -11,7 +11,6 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Data
 @SuperBuilder
