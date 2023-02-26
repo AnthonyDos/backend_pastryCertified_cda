@@ -15,6 +15,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * implémentation des services shop et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class ShopServiceImpl implements ShopService {
@@ -25,9 +28,9 @@ public class ShopServiceImpl implements ShopService {
     public Shop save(String name, String description, MultipartFile image) {
        Shop shop = shopRepository.findByName(name)
                .orElse(null);
-        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+       String fileName = StringUtils.cleanPath(image.getOriginalFilename());
 
-        if (shop == null) {
+       if (shop == null) {
             return shopRepository.save(
                     Shop.builder()
                             .name(name)
@@ -35,8 +38,8 @@ public class ShopServiceImpl implements ShopService {
                             .image(fileName)
                             .build()
             );
-        }
-        return shop;
+       }
+       return shop;
     }
 
     @Override

@@ -4,6 +4,9 @@ import com.pastrycertified.cda.dto.CategoryDto;
 
 import java.util.List;
 
+/**
+ * cette interface intéragie entre le controller et le service d'implémentation
+ */
 public interface CategoryService {
 
     List<CategoryDto> findAll();

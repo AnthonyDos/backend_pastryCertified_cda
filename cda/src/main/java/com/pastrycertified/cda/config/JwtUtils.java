@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+/**
+ * Gestion du jwt et de ces méthodes
+ */
 @Service
 public class JwtUtils {
 

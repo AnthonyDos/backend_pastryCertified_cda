@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Cette classe sert à la facturation et la génération du numéro de
+ * facture et qui implémente le service
+ */
+
 @Service
 @RequiredArgsConstructor
 public class InvoiceServiceImpl implements InvoiceService {
@@ -86,7 +91,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     public static String generateInvoiceCharacters(int length, int lengthNumber) {
         String characters = GenerateCharactersInvoice.CHARACTERS.getValue();
         String numbers = GenerateCharactersInvoice.NUMBERS.getValue();
-
         StringBuffer randomString = new StringBuffer(length);
         StringBuffer randomNumber = new StringBuffer(lengthNumber);
         Random random = new Random();

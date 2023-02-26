@@ -10,6 +10,10 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * cette méthode permet de vérifier si il n ' y a pas d'erreur dans l'objet envoyé
+ * @param <T>
+ */
 @Component
 public class ObjectsValidator<T> {
 

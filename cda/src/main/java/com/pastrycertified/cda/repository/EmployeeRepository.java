@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
+/**
+ * cette interface intéragie entre la bdd et le service d'implémentation
+ */
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     Optional<Employee> findByEmail(String email);

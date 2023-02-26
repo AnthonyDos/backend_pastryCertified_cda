@@ -14,6 +14,10 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Cette classe implémente les services adresse, comporte
+ * une vérification de l'objet avant l'inscription en bdd et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {

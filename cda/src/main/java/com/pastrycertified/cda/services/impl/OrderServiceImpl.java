@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Implémentations des services commandes, méthode pour la génération d'un numéro de commande et
+ * qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {

@@ -15,6 +15,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NonUniqueResultException;
 import javax.validation.UnexpectedTypeException;
 
+
+/**
+ * gestion des exceptions
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

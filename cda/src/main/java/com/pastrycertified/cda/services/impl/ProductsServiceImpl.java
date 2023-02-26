@@ -18,6 +18,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * implémentation des services produits et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductsServiceImpl implements ProductsService {

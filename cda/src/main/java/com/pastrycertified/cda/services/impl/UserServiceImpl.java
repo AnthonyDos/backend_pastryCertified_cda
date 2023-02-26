@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Cette classe concerne tous les services user ainsi que les services
+ * d'inscription et de connexion et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {

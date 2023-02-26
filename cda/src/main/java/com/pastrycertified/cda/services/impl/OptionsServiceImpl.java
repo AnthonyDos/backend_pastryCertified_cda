@@ -11,6 +11,12 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * implémentation des services options qui concernes les pâtisseries
+ * et qui implémente le service
+ */
+
 @Service
 @RequiredArgsConstructor
 public class OptionsServiceImpl implements OptionsService {

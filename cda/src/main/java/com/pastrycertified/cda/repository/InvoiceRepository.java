@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * cette interface intéragie entre la bdd et le service d'implémentation
+ */
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     @Query(value = "SELECT * FROM invoice INNER JOIN order ON invoice.orders_id = order.id WHERE invoice.orders_id = :id", nativeQuery = true)

@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+/**
+ * cette interface intéragie entre la bdd et le service d'implémentation
+ */
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);

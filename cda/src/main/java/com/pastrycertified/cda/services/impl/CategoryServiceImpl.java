@@ -1,7 +1,6 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.dto.CategoryDto;
-import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.repository.CategoryRepository;
 import com.pastrycertified.cda.services.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,9 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implémentation des services catégories et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {

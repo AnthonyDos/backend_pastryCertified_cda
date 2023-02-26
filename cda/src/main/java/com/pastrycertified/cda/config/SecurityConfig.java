@@ -22,6 +22,9 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
+/**
+ * Configuration des accès routes et des autorisations
+ */
 @EnableWebSecurity // active la sécurité
 @RequiredArgsConstructor
 public class SecurityConfig {

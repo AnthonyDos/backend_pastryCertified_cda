@@ -2,6 +2,9 @@ package com.pastrycertified.cda.services;
 
 import java.util.List;
 
+/**
+ * cette interface intéragie entre le controller et le service d'implémentation
+ */
 public interface AbstractService<T>{
 
     Integer save(T dto);

@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+/**
+ * cette interface intéragie entre la bdd et le service d'implémentation
+ */
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     @Query(value="SELECT * FROM `address` INNER JOIN user ON address.id_user = user.id WHERE address.id_user=:id", nativeQuery = true)

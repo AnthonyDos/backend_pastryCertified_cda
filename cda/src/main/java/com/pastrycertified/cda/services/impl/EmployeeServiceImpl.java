@@ -21,6 +21,10 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * implémentation des services employées, vérification des données envoyés
+ * en bdd et gestion des services inscription et connexion et qui implémente le service
+ */
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
