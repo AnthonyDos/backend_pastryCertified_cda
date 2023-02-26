@@ -35,9 +35,9 @@ public class AuthenticationController {
 
     @PostMapping("${auth.register.admin}")
     public ResponseEntity<AuthenticationResponse> registerAdmin(
-            @RequestBody EmployeeDto salary
+            @RequestBody EmployeeDto employees
     ) {
-        return ResponseEntity.ok(employeeService.register(salary));
+        return ResponseEntity.ok(employeeService.register(employees));
     }
 
     @PostMapping("${auth.authenticate.admin}")
@@ -57,8 +57,8 @@ public class AuthenticationController {
 
     @PostMapping("${auth.authenticate.pastyChef}")
     public ResponseEntity<AuthenticationResponse> registerPastryChef(
-            @RequestBody EmployeeDto salary
+            @RequestBody EmployeeDto employees
     ) {
-        return ResponseEntity.ok(employeeService.registerPastryChef(salary));
+        return ResponseEntity.ok(employeeService.registerPastryChef(employees));
     }
 }

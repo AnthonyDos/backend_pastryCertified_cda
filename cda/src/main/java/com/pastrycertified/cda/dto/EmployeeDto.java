@@ -59,19 +59,19 @@ public class EmployeeDto {
                 .build();
     }
 
-    public static Employee toEntity(EmployeeDto salary) {
+    public static Employee toEntity(EmployeeDto employee) {
 
         return Employee.builder()
-                .id(salary.getId())
-                .lastname(salary.getLastname())
-                .firstname(salary.getFirstname())
-                .email(salary.getEmail())
-                .password(salary.getPassword())
-                .phone(salary.getPhone())
-                .cast_member(salary.getCast_member())
+                .id(employee.getId())
+                .lastname(employee.getLastname())
+                .firstname(employee.getFirstname())
+                .email(employee.getEmail())
+                .password(employee.getPassword())
+                .phone(employee.getPhone())
+                .cast_member(employee.getCast_member())
                 .role(
                         Role.builder()
-                                .name(salary.role_name)
+                                .name(employee.role_name)
                                 .build()
                 )
                 .build();

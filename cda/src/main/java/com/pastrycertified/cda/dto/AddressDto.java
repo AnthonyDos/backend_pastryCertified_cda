@@ -1,6 +1,7 @@
 package com.pastrycertified.cda.dto;
 
 import com.pastrycertified.cda.models.Address;
+import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,6 +62,11 @@ public class AddressDto {
                 .zipCode(address.getZipCode())
                 .city(address.getCity())
                 .country(address.getCountry())
+//                .user(
+//                        User.builder()
+//                                .id(address.getId_user())
+//                                .build()
+//                )
                 .build();
     }
 }

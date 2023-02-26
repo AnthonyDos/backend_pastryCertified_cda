@@ -4,8 +4,10 @@ import com.pastrycertified.cda.config.JwtUtils;
 import com.pastrycertified.cda.dto.AuthenticationRequest;
 import com.pastrycertified.cda.dto.AuthenticationResponse;
 import com.pastrycertified.cda.dto.UserDto;
+import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
+import com.pastrycertified.cda.repository.AddressRepository;
 import com.pastrycertified.cda.repository.RoleRepository;
 import com.pastrycertified.cda.repository.UserRepository;
 import com.pastrycertified.cda.services.UserService;
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private static final String ROLE_USER = "ROLE_USER";
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final AddressRepository addressRepository;
     private final ObjectsValidator<UserDto> validator;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
@@ -103,10 +106,22 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public AuthenticationResponse  register(UserDto dto) {
+
         validator.validate(dto);
         User user = UserDto.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(findOrCreateRole(ROLE_USER));
+        user.setAddress(
+                 addressRepository.save(
+                         Address.builder()
+                                 .address_number(user.getAddress().getAddress_number())
+                                 .street(user.getAddress().getStreet())
+                                 .zipCode(user.getAddress().getZipCode())
+                                 .city(user.getAddress().getCity())
+                                 .country(user.getAddress().getCountry())
+                                 .build()
+                 )
+        );
 
         var savedUser = userRepository.save(user);
         Map<String, Object> claims = new HashMap<>();
@@ -114,6 +129,8 @@ public class UserServiceImpl implements UserService {
         claims.put("fullName", savedUser.getFirstname() + " " + savedUser.getLastname());
         String token = jwtUtils.generateToken(savedUser, claims);
         final String expirationToken = String.valueOf(jwtUtils.extractExpiration(token));
+
+        addressRepository.updateByIdAddress(savedUser.getId(), savedUser.getAddress().getId());
 
         return AuthenticationResponse.builder()
                 .access_token(token)

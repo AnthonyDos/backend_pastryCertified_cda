@@ -10,7 +10,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     Optional<Employee> findByEmail(String email);
 
-    @Query(value = "SELECT * FROM salary INNER JOIN role ON salary.role_id = role.id WHERE salary.id = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee INNER JOIN role ON employee.role_id = role.id WHERE employee.id = :id", nativeQuery = true)
     Optional<Employee> findAdminById(Integer id);
 
 }

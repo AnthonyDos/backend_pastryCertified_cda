@@ -1,5 +1,6 @@
 package com.pastrycertified.cda.dto;
 
+import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.Role;
 import com.pastrycertified.cda.models.User;
 import lombok.AllArgsConstructor;
@@ -49,7 +50,7 @@ public class UserDto {
 
     private String role_name;
 
-    private AddressDto addressDto;
+    private AddressDto address;
 
     private Integer address_id;
 
@@ -65,7 +66,7 @@ public class UserDto {
                 .password(user.getPassword())
                 .phone(user.getPhone())
                 .role_name(user.getRole().getName())
-                .addressDto(AddressDto.fromEntity(user.getAddress()))
+                .address(AddressDto.fromEntity(user.getAddress()))
                 .address_id(user.getAddress().getId())
                 .build();
     }
@@ -84,6 +85,15 @@ public class UserDto {
                 .role(
                         Role.builder()
                                 .name(user.role_name)
+                                .build()
+                )
+                .address(
+                        Address.builder()
+                                .address_number(user.getAddress().getAddress_number())
+                                .street(user.getAddress().getStreet())
+                                .zipCode(user.getAddress().getZipCode())
+                                .city(user.getAddress().getCity())
+                                .country(user.getAddress().getCountry())
                                 .build()
                 )
                 .build();

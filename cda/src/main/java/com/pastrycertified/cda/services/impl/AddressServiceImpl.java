@@ -1,7 +1,6 @@
 package com.pastrycertified.cda.services.impl;
 
 import com.pastrycertified.cda.dto.AddressDto;
-import com.pastrycertified.cda.dto.UserDto;
 import com.pastrycertified.cda.models.Address;
 import com.pastrycertified.cda.models.User;
 import com.pastrycertified.cda.repository.AddressRepository;

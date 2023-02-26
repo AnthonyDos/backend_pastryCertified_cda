@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -35,9 +36,6 @@ public class User extends AbstractEntityUser implements UserDetails{
 
     @OneToMany(mappedBy = "user")
     private Set<Orders> order;
-
-//    @OneToMany(mappedBy = "user_invoice")
-//    private Set<Invoice> invoice;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
