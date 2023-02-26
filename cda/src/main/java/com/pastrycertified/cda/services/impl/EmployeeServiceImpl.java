@@ -39,6 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authManager;
+    private Integer LENGTH_CAST_NUMBER = 4;
 
 
     @Override
@@ -122,7 +123,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = EmployeeDto.toEntity(dto);
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employee.setRole(findOrCreateRole(ROLE_ADMIN));
-        employee.setCast_member(ACTIVITY + generateCastNumber(4));
+        employee.setCast_member(ACTIVITY + generateCastNumber(LENGTH_CAST_NUMBER));
 
         var savedAdmin = employeeRepository.save(employee);
         Map<String, Object> claims = new HashMap<>();
@@ -143,7 +144,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = EmployeeDto.toEntity(dto);
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employee.setRole(findOrCreateRole(ROLE_PASTRYCHEF));
-        employee.setCast_member(ACTIVITY_PASTRYCHEF + generateCastNumber(4));
+        employee.setCast_member(ACTIVITY_PASTRYCHEF + generateCastNumber(LENGTH_CAST_NUMBER));
 
         var savedAdmin = employeeRepository.save(employee);
         Map<String, Object> claims = new HashMap<>();
