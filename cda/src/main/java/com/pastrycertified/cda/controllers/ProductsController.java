@@ -1,6 +1,7 @@
 package com.pastrycertified.cda.controllers;
 
 import com.pastrycertified.cda.dto.ProductsDto;
+import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.models.Products;
 import com.pastrycertified.cda.services.ProductsService;
 import lombok.RequiredArgsConstructor;

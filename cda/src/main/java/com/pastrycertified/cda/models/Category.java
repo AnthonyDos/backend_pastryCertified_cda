@@ -18,7 +18,4 @@ public class Category extends AbstractEntity {
 
     private String name;
 
-    @OneToOne
-    private Options options;
-
 }

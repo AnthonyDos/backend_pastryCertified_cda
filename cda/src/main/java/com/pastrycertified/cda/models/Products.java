@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -30,16 +31,7 @@ public class Products extends AbstractEntity {
     private Category category;
 
     @OneToOne
+    @Nullable
     private Options options;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "optioncream_product",
-//            joinColumns = @JoinColumn(name = "id_product"),
-//            inverseJoinColumns = @JoinColumn(name = "id_optioncream")
-//    )
-//    Set<OptionsCream> otpionsCreamProduct;
-
-
 
 }

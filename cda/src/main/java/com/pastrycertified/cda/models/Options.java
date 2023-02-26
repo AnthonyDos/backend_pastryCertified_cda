@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -22,40 +23,22 @@ import javax.persistence.*;
 })
 public class Options extends AbstractEntity {
 
+    @Nullable
     private String typeOption;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String cream;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String finition;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String paste;
-
-//    @Type( type = "json" )
-//    @Column(columnDefinition = "json")
-//    private Map<String, String> listOption;
-
-//    @OneToOne
-//    private Category category;
-
-//    @ManyToMany
-//    Set<Category> optionCreamCategory;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "optionCreamCategory",
-//            joinColumns = @JoinColumn(name = "id_optionCream"),
-//            inverseJoinColumns = @JoinColumn(name = "id_category")
-//    )
-//    Set<Category> optionCreamCategory;
-
-//    @ManyToMany
-//    Set<Products>optionCream;
-
 
 }

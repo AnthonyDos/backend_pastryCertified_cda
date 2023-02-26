@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
@@ -43,18 +44,22 @@ public class ProductsDto {
 
     private String categoryName;
 
+    @Nullable
     private String optionsName;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String cream;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String finition;
 
     @Type( type = "json" )
     @Column(columnDefinition = "json")
+    @Nullable
     private String paste;
 
     public static ProductsDto fromEntity(Products products) {
