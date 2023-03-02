@@ -13,11 +13,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.mockito.Mockito.doReturn;
+import java.util.List;
+import java.util.Optional;
+
+
 import static org.mockito.Mockito.when;
 
 
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 class CategoryControllerTest {
 
     CategoryServiceImpl categoryService;
+
     @Mock
     CategoryRepository categoryRepository;
 
@@ -43,18 +44,26 @@ class CategoryControllerTest {
         categoryList.add(mockCategoryDto);
         categoryList.add(mockCategoryDto1);
 
-        doReturn(Arrays.asList(mockCategoryDto,mockCategoryDto1)).when(categoryRepository).findAll();
+        when(categoryService.findAll()).thenReturn(categoryList);
+        List<Category> returnResponseCategory = categoryRepository.findAll();
 
-        List<CategoryDto>categoryDtoResponse = categoryService.findAll();
-        Assertions.assertEquals(2,categoryDtoResponse.size(), "findAll should return 2 categories");
-
+        Assertions.assertNotNull(returnResponseCategory);
+        Assertions.assertEquals(2,returnResponseCategory.size(), "findAll should return 2 categories");
     }
 
     @Test
+    @DisplayName("should return one category")
     void findById() {
+
+        Integer id = 1;
+        CategoryDto categoryDto = new CategoryDto(1,"cake");
+
+        when(categoryService.findById(1)).thenReturn(categoryDto);
+        Optional<Category> returnCategory = categoryRepository.findById(id);
+
+        Assertions.assertNotNull(returnCategory);
+        Assertions.assertEquals("cake", returnCategory.get().getName());
+        Assertions.assertEquals(1, returnCategory.get().getId());
     }
 
-    @Test
-    void delete() {
-    }
 }
