@@ -3,12 +3,14 @@ package com.pastrycertified.cda.controllers;
 import com.pastrycertified.cda.dto.CategoryDto;
 import com.pastrycertified.cda.models.Category;
 import com.pastrycertified.cda.repository.CategoryRepository;
+import com.pastrycertified.cda.services.CategoryService;
 import com.pastrycertified.cda.services.impl.CategoryServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -24,14 +26,17 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
 
-    CategoryServiceImpl categoryService;
+    @Mock
+    CategoryServiceImpl categoryServiceImpl;
+
+    CategoryService categoryService;
 
     @Mock
     CategoryRepository categoryRepository;
 
     @BeforeEach
     void setUp() {
-        this.categoryService = new CategoryServiceImpl(categoryRepository);
+        this.categoryServiceImpl = new CategoryServiceImpl(categoryRepository);
     }
 
     @Test
@@ -44,7 +49,7 @@ class CategoryControllerTest {
         categoryList.add(mockCategoryDto);
         categoryList.add(mockCategoryDto1);
 
-        when(categoryService.findAll()).thenReturn(categoryList);
+        when(categoryServiceImpl.findAll()).thenReturn(categoryList);
         List<Category> returnResponseCategory = categoryRepository.findAll();
 
         Assertions.assertNotNull(returnResponseCategory);
@@ -55,15 +60,16 @@ class CategoryControllerTest {
     @DisplayName("should return one category")
     void findById() {
 
-        Integer id = 1;
-        CategoryDto categoryDto = new CategoryDto(1,"cake");
+        Integer id = 75;
 
-        when(categoryService.findById(1)).thenReturn(categoryDto);
-        Optional<Category> returnCategory = categoryRepository.findById(id);
+        CategoryDto mockCategoryDtoResponse = new CategoryDto(75, "tarte");
 
-        Assertions.assertNotNull(returnCategory);
-        Assertions.assertEquals("cake", returnCategory.get().getName());
-        Assertions.assertEquals(1, returnCategory.get().getId());
+        when(categoryServiceImpl.findById(mockCategoryDtoResponse.getId())).thenReturn(mockCategoryDtoResponse);
+        Optional<Category> returnResponseCategory = categoryRepository.findById(id);
+
+        Assertions.assertNotNull(returnResponseCategory);
+        Assertions.assertEquals("cake", returnResponseCategory.get().getName());
+        Assertions.assertEquals(75, returnResponseCategory.get().getId());
     }
 
 }

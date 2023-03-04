@@ -78,6 +78,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeDto findAdminById(Integer id) {
+
+        return employeeRepository.findAdminById(id)
+                .map(EmployeeDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("Aucun admin n'a été trouvé avec l'ID fourni :" + id));
+    }
+
+    @Override
     public Integer updateByid(Integer id, EmployeeDto dto) {
         Employee ifEmployee = employeeRepository.findAdminById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Aucun admin correspond à l'id: " + id));
@@ -181,13 +189,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
     }
 
-    @Override
-    public EmployeeDto findAdminById(Integer id) {
-
-        return employeeRepository.findAdminById(id)
-                .map(EmployeeDto::fromEntity)
-                .orElseThrow(() -> new EntityNotFoundException("Aucun admin n'a été trouvé avec l'ID fourni :" + id));
-    }
 
     /**
      * Methode de générateur d'identifiant admin

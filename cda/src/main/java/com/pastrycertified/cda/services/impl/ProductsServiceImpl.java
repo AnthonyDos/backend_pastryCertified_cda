@@ -100,8 +100,8 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     private Category findOrCreateCategory(String categoryName) {
-        Category category = categoryRepository.findByName(categoryName)
-                .orElse(null);
+        Category category = categoryRepository.findByName(categoryName);
+                //.orElse(null);
         if (category == null) {
             return categoryRepository.save(
                     Category.builder()
